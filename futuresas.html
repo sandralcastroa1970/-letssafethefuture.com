@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FUTURE S.A.S. | Innovación Inteligente para un Futuro Sostenible</title>
+    <meta name="description" content="FUTURE S.A.S. - Organización internacional líder en Inteligencia Artificial, Biotecnología, Energías Limpias y Desarrollo Sostenible Global.">
+
+    <!-- FUENTES CORPORATIVAS OFICIALES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- MATERIAL SYMBOLS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
+
+    <!-- MOTORES 3D Y ANIMACIÓN AVANZADA -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        /* ==========================================================================
+           1. CÓDIGO CROMÁTICO OFICIAL DE MARCA (FUTURE S.A.S.)
+           ========================================================================== */
+        :root {
+            --bg-dark: #020617;
+            --brand-navy: #050B20;
+            --brand-navy-card: rgba(5, 11, 32, 0.75);
+            --brand-green-bright: #00FF84;
+            --brand-green: #00E676;
+            --brand-green-glow: rgba(0, 255, 132, 0.45);
+            --brand-green-dark: #003818;
+            --text-main: #FFFFFF;
+            --text-muted: #94A3B8;
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --border-emerald: rgba(0, 255, 132, 0.35);
+            --font-serif: 'Cinzel', serif;
+            --font-sans: 'Space Grotesk', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --ease-lux: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            cursor: none;
+        }
+
+        html, body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            width: 100%;
+            scroll-behavior: smooth;
+        }
+
+        /* Scrollbar Personalizado */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 132, 0.35);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: var(--brand-green-bright); }
+
+        /* ==========================================================================
+           2. CURSOR MAGNÉTICO
+           ========================================================================== */
+        .cursor-dot {
+            position: fixed; top: 0; left: 0;
+            width: 8px; height: 8px;
+            background: var(--brand-green-bright);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 14px var(--brand-green-glow);
+        }
+
+        .cursor-circle {
+            position: fixed; top: 0; left: 0;
+            width: 44px; height: 44px;
+            border: 1px solid rgba(0, 255, 132, 0.4);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s var(--ease-lux), height 0.3s var(--ease-lux), background 0.3s, border-color 0.3s;
+        }
+
+        /* ==========================================================================
+           3. BACKGROUND THREE.JS (PLANETA BIO-TECNOLÓGICO 3D)
+           ========================================================================== */
+        #webgl-bg {
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: 0; pointer-events: none;
+        }
+
+        /* ==========================================================================
+           4. NAVBAR CORPORATIVA
+           ========================================================================== */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 18px 60px;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000;
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-glass);
+            transition: all 0.4s var(--ease-lux);
+        }
+
+        .navbar.scrolled {
+            padding: 12px 60px;
+            background: rgba(2, 6, 23, 0.95);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.85);
+        }
+
+        .brand-logo-wrap {
+            display: flex; align-items: center; gap: 16px;
+            text-decoration: none;
+        }
+
+        .brand-svg-icon {
+            width: 44px; height: 44px;
+            filter: drop-shadow(0 0 12px var(--brand-green-glow));
+            transition: transform 0.5s var(--ease-lux);
+        }
+
+        .brand-logo-wrap:hover .brand-svg-icon {
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .brand-title-text {
+            font-family: var(--font-mono);
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.35em;
+            color: var(--brand-green-bright);
+            text-transform: uppercase;
+        }
+
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-link {
+            text-decoration: none; color: var(--text-muted);
+            font-size: 0.85rem; letter-spacing: 0.12em;
+            text-transform: uppercase; font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-link:hover { color: var(--brand-green-bright); }
+
+        .btn-header {
+            padding: 12px 28px; border-radius: 30px;
+            border: 1px solid var(--border-emerald);
+            background: rgba(0, 255, 132, 0.08);
+            color: var(--brand-green-bright);
+            font-family: var(--font-sans);
+            font-size: 0.8rem; letter-spacing: 0.15em;
+            text-transform: uppercase; font-weight: 600;
+            text-decoration: none;
+            transition: all 0.4s var(--ease-lux);
+            box-shadow: 0 0 15px rgba(0, 255, 132, 0.15);
+        }
+
+        .btn-header:hover {
+            background: var(--brand-green-bright);
+            color: var(--brand-navy);
+            box-shadow: 0 0 30px var(--brand-green-glow);
+            transform: translateY(-2px);
+        }
+
+        /* ==========================================================================
+           5. HERO SECTION
+           ========================================================================== */
+        .hero-section {
+            position: relative;
+            min-height: 100vh; width: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 140px 20px 80px 20px;
+            text-align: center; z-index: 10;
+        }
+
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 8px 22px; border-radius: 30px;
+            background: rgba(0, 255, 132, 0.06);
+            border: 1px solid var(--border-emerald);
+            color: var(--brand-green-bright);
+            font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase;
+            margin-bottom: 24px; backdrop-filter: blur(10px);
+        }
+
+        .hero-title {
+            font-family: var(--font-mono);
+            font-size: clamp(2.8rem, 6.5vw, 5.8rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: 0.25em;
+            color: #FFFFFF;
+            text-shadow: 0 0 40px rgba(0, 255, 132, 0.35);
+            margin-bottom: 24px;
+            text-transform: uppercase;
+        }
+
+        .hero-title span { color: var(--brand-green-bright); }
+
+        .hero-subtitle {
+            font-size: clamp(1.15rem, 1.9vw, 1.55rem);
+            color: var(--text-muted);
+            max-width: 860px; font-weight: 300;
+            line-height: 1.7; margin-bottom: 44px;
+            letter-spacing: 0.03em;
+        }
+
+        .hero-cta-group { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+
+        .btn-primary {
+            padding: 18px 42px; border-radius: 40px;
+            background: linear-gradient(135deg, var(--brand-green-bright), var(--brand-green));
+            color: var(--brand-navy); font-family: var(--font-sans);
+            font-weight: 700; font-size: 0.88rem;
+            letter-spacing: 0.15em; text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.4s var(--ease-lux);
+            box-shadow: 0 0 30px var(--brand-green-glow);
+            border: none;
+            display: inline-flex; align-items: center; gap: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 0 50px rgba(0, 255, 132, 0.7);
+        }
+
+        .btn-secondary {
+            padding: 18px 42px; border-radius: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-glass);
+            color: var(--text-main); font-family: var(--font-sans);
+            font-weight: 600; font-size: 0.88rem;
+            letter-spacing: 0.15em; text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.4s var(--ease-lux);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--brand-green-bright);
+            color: var(--brand-green-bright);
+            box-shadow: 0 0 30px var(--brand-green-glow);
+            transform: translateY(-4px);
+        }
+
+        .scroll-indicator {
+            position: absolute; bottom: 30px;
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            color: var(--text-muted); font-size: 0.7rem;
+            letter-spacing: 0.25em; text-transform: uppercase;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* ==========================================================================
+           6. SECCIÓN DE PROPÓSITO & SENSIBILIDAD ECOLÓGICA
+           ========================================================================== */
+        .purpose-section {
+            position: relative;
+            padding: 100px 60px;
+            max-width: 1440px; margin: 0 auto;
+            z-index: 10;
+        }
+
+        .purpose-box {
+            background: linear-gradient(135deg, var(--brand-navy-card), rgba(2, 6, 23, 0.95));
+            border: 1px solid var(--border-emerald);
+            border-radius: 36px;
+            padding: 80px 60px;
+            position: relative; overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px);
+        }
+
+        .purpose-content { max-width: 900px; margin: 0 auto; text-align: center; }
+
+        .purpose-quote {
+            font-family: var(--font-serif);
+            font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+            line-height: 1.35; color: var(--text-main);
+            margin-bottom: 30px; font-style: italic;
+        }
+
+        .purpose-quote span {
+            color: var(--brand-green-bright); font-style: normal;
+        }
+
+        .purpose-desc {
+            color: var(--text-muted);
+            font-size: 1.15rem; line-height: 1.85; font-weight: 300;
+        }
+
+        /* ==========================================================================
+           7. SECCIONES INSTITUCIONALES (NOSOTROS, MISIÓN, VISIÓN)
+           ========================================================================== */
+        section {
+            position: relative;
+            padding: 120px 60px;
+            max-width: 1440px; margin: 0 auto; z-index: 10;
+        }
+
+        .section-header { margin-bottom: 70px; text-align: center; }
+        .section-tag {
+            font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase;
+            color: var(--brand-green-bright); margin-bottom: 12px; font-weight: 600; display: block;
+        }
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: clamp(2.2rem, 4vw, 3.8rem);
+            font-weight: 700; color: var(--text-main); line-height: 1.15;
+        }
+
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+        .about-card {
+            background: var(--brand-navy-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px; padding: 48px;
+            backdrop-filter: blur(12px); position: relative;
+            transition: border-color 0.4s;
+        }
+        .about-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--brand-green-bright), transparent);
+        }
+        .about-card:hover { border-color: var(--border-emerald); }
+
+        .about-text { font-size: 1.15rem; line-height: 1.85; color: var(--text-muted); font-weight: 300; }
+
+        /* MISIÓN Y VISIÓN CON TEXTOS EXACTOS */
+        .mission-vision-container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .mv-card {
+            background: var(--brand-navy-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 28px; padding: 50px;
+            backdrop-filter: blur(14px);
+            transition: all 0.4s var(--ease-lux);
+            position: relative; overflow: hidden;
+        }
+        .mv-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--border-emerald);
+            box-shadow: 0 20px 50px rgba(0, 255, 132, 0.15);
+        }
+
+        .mv-icon { font-size: 3rem; color: var(--brand-green-bright); margin-bottom: 24px; }
+        .mv-title { font-family: var(--font-serif); font-size: 2rem; color: var(--text-main); margin-bottom: 20px; }
+        .mv-body { color: var(--text-muted); line-height: 1.8; font-size: 1.05rem; font-weight: 300; }
+
+        /* ==========================================================================
+           8. ECOSISTEMAS TECNOLÓGICOS (ULULATO & FOSADI)
+           ========================================================================== */
+        .ecosystems-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .eco-card {
+            background: linear-gradient(160deg, var(--brand-navy-card), rgba(2, 6, 23, 0.95));
+            border: 1px solid var(--border-glass);
+            border-radius: 28px; padding: 50px;
+            backdrop-filter: blur(16px);
+            display: flex; flex-direction: column; justify-content: space-between;
+            transition: all 0.5s var(--ease-lux);
+        }
+        .eco-card:hover { border-color: var(--brand-green-bright); box-shadow: 0 0 60px rgba(0, 255, 132, 0.2); }
+
+        .eco-badge {
+            padding: 6px 16px; border-radius: 20px; font-size: 0.7rem;
+            letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700;
+            display: inline-block; margin-bottom: 16px;
+            background: rgba(0, 255, 132, 0.12); color: var(--brand-green-bright);
+            border: 1px solid var(--border-emerald);
+        }
+
+        .eco-title { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 700; color: var(--text-main); margin-bottom: 16px; }
+        .eco-body { color: var(--text-muted); font-size: 1.05rem; line-height: 1.8; margin-bottom: 32px; font-weight: 300; }
+
+        /* ==========================================================================
+           9. OBJETIVOS ESTRATÉGICOS Y ÁREAS DE INVESTIGACIÓN
+           ========================================================================== */
+        .objectives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .obj-card {
+            background: var(--brand-navy-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px; padding: 36px;
+            backdrop-filter: blur(10px);
+            transition: all 0.5s var(--ease-lux);
+            position: relative;
+        }
+        .obj-card:hover {
+            border-color: var(--brand-green-bright);
+            box-shadow: 0 20px 50px rgba(0, 255, 132, 0.15);
+            transform: translateY(-6px);
+        }
+
+        .obj-number {
+            font-family: var(--font-serif); font-size: 3rem; font-weight: 900;
+            color: rgba(255, 255, 255, 0.06); position: absolute; top: 20px; right: 24px;
+        }
+        .obj-icon {
+            width: 56px; height: 56px; border-radius: 14px;
+            background: rgba(0, 255, 132, 0.1); color: var(--brand-green-bright);
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.8rem; margin-bottom: 24px;
+            border: 1px solid rgba(0, 255, 132, 0.25);
+        }
+        .obj-title { font-family: var(--font-serif); font-size: 1.35rem; color: var(--text-main); margin-bottom: 12px; }
+        .obj-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+
+        /* HEX GRID INVESTIGACIÓN */
+        .hex-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; max-width: 1200px; margin: 0 auto; }
+        .hex-item {
+            width: 220px; height: 240px;
+            background: var(--brand-navy-card); border: 1px solid var(--border-glass);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 20px; text-align: center;
+            transition: all 0.4s var(--ease-lux);
+        }
+        .hex-item:hover {
+            background: rgba(5, 11, 32, 0.95); transform: scale(1.08);
+            border-color: var(--brand-green-bright); box-shadow: 0 0 30px var(--brand-green-glow); z-index: 20;
+        }
+        .hex-icon { font-size: 2.4rem; color: var(--brand-green-bright); margin-bottom: 12px; }
+        .hex-title { font-weight: 600; font-size: 0.9rem; letter-spacing: 0.05em; color: var(--text-main); }
+
+        /* METRICS */
+        .metrics-section {
+            background: linear-gradient(180deg, transparent, rgba(0, 255, 132, 0.03), transparent);
+            padding: 80px 60px; max-width: 100%;
+        }
+        .metrics-grid {
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px;
+            text-align: center;
+        }
+        .metric-number {
+            font-family: var(--font-serif); font-size: clamp(3rem, 5vw, 4.5rem);
+            font-weight: 900; color: var(--brand-green-bright);
+            text-shadow: 0 0 30px var(--brand-green-glow); line-height: 1; margin-bottom: 10px;
+        }
+        .metric-label { font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
+
+        /* ROADMAP */
+        .timeline { position: relative; max-width: 1000px; margin: 0 auto; padding: 40px 0; }
+        .timeline::before {
+            content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 2px;
+            background: linear-gradient(180deg, var(--brand-green-bright), var(--brand-navy), transparent);
+            transform: translateX(-50%);
+        }
+        .timeline-item { position: relative; width: 50%; padding: 20px 40px; box-sizing: border-box; }
+        .timeline-item.left { left: 0; text-align: right; }
+        .timeline-item.right { left: 50%; text-align: left; }
+        .timeline-dot {
+            position: absolute; top: 30px; width: 16px; height: 16px; border-radius: 50%;
+            background: var(--brand-green-bright); box-shadow: 0 0 15px var(--brand-green-bright);
+        }
+        .timeline-item.left .timeline-dot { right: -8px; }
+        .timeline-item.right .timeline-dot { left: -8px; }
+
+        .timeline-content {
+            background: var(--brand-navy-card); border: 1px solid var(--border-glass);
+            border-radius: 16px; padding: 28px; backdrop-filter: blur(10px);
+        }
+        .timeline-year { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: var(--brand-green-bright); margin-bottom: 8px; }
+        .timeline-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+
+        /* CALL TO ACTION */
+        .cta-box {
+            background: linear-gradient(135deg, var(--brand-navy), rgba(2, 6, 23, 0.95));
+            border: 1px solid var(--border-emerald);
+            border-radius: 32px; padding: 80px 40px; text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85);
+            position: relative; overflow: hidden;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: #01040d; border-top: 1px solid var(--border-glass);
+            padding: 80px 60px 40px 60px; position: relative; z-index: 10;
+        }
+        .footer-grid {
+            max-width: 1440px; margin: 0 auto 60px auto;
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 60px;
+        }
+        .footer-bottom {
+            max-width: 1440px; margin: 0 auto; padding-top: 30px;
+            border-top: 1px solid var(--border-glass);
+            display: flex; justify-content: space-between; color: var(--text-muted); font-size: 0.85rem;
+        }
+
+        @media (max-width: 1024px) {
+            .navbar { padding: 20px 30px; }
+            section { padding: 80px 30px; }
+            .about-grid, .ecosystems-wrapper, .mission-vision-container { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .timeline::before { left: 20px; }
+            .timeline-item { width: 100%; padding-left: 50px; text-align: left !important; }
+            .timeline-item.right { left: 0; }
+            .timeline-dot { left: 12px !important; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links, .btn-header { display: none; }
+            .hero-title { font-size: 2.5rem; letter-spacing: 0.15em; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; gap: 15px; text-align: center; }
+            .purpose-box { padding: 50px 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CURSOR PERSONALIZADO -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-circle"></div>
+
+    <!-- CANVAS THREE.JS DE FONDO (PLANETA BIO-TECNOLÓGICO CON FÍSICA Y AMORTIGUACIÓN SEDA 3D) -->
+    <canvas id="webgl-bg"></canvas>
+
+    <!-- NAVBAR OFICIAL -->
+    <nav class="navbar" id="navbar">
+        <a href="#" class="brand-logo-wrap">
+            <svg class="brand-svg-icon" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="gradLogoGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#00FF84" />
+                        <stop offset="100%" stop-color="#00C853" />
+                    </linearGradient>
+                </defs>
+                <path d="M100 22 C118 22 140 36 140 58 C140 76 122 86 104 86 C98 86 90 83 85 78 C80 72 80 64 84 50 C88 36 94 22 100 22 Z" fill="url(#gradLogoGreen)" />
+                <path d="M178 100 C178 118 164 140 142 140 C124 140 114 122 114 104 C114 98 117 90 122 85 C128 80 136 80 150 84 C164 88 178 94 178 100 Z" fill="url(#gradLogoGreen)" />
+                <path d="M100 178 C82 178 60 164 60 142 C60 124 78 114 96 114 C102 114 110 117 115 122 C120 128 120 136 116 150 C112 164 106 178 100 178 Z" fill="url(#gradLogoGreen)" />
+                <path d="M22 100 C22 82 36 60 58 60 C76 60 86 78 86 96 C86 102 83 110 78 115 C72 120 64 120 50 116 C36 112 22 106 22 100 Z" fill="url(#gradLogoGreen)" />
+                <path d="M96 68 C80 80 75 92 75 96 C85 96 96 82 96 68 Z" fill="url(#gradLogoGreen)"/>
+                <path d="M132 96 C120 80 108 75 104 75 C104 85 118 96 132 96 Z" fill="url(#gradLogoGreen)"/>
+                <path d="M104 132 C120 120 125 108 125 104 C115 104 104 118 104 132 Z" fill="url(#gradLogoGreen)"/>
+                <path d="M68 104 C80 120 92 125 96 125 C96 115 82 104 68 104 Z" fill="url(#gradLogoGreen)"/>
+            </svg>
+            <div>
+                <span class="brand-title-text">FUTURE S.A.S.</span>
+            </div>
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="#about" class="nav-link">Nosotros</a></li>
+            <li><a href="#mission" class="nav-link">Misión y Visión</a></li>
+            <li><a href="#ecosystems" class="nav-link">Ecosistemas</a></li>
+            <li><a href="#objectives" class="nav-link">Objetivos</a></li>
+            <li><a href="#research" class="nav-link">Investigación</a></li>
+            <li><a href="#impact" class="nav-link">Impacto Global</a></li>
+        </ul>
+
+        <a href="#contact" class="btn-header">Unirse a la Red</a>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="hero">
+        <div class="hero-badge">
+            <span class="material-symbols-rounded" style="font-size: 16px;">eco</span>
+            Inteligencia Digital & Conservación Ecológica
+        </div>
+        <h1 class="hero-title">FUTURE <span>S.A.S.</span></h1>
+        <p class="hero-subtitle">
+            Innovación Inteligente para un Futuro Sostenible. Uniendo la Ciencia, la Inteligencia Artificial y la Conservación Ambiental para la Preservación y Evolución del Planeta.
+        </p>
+        <div class="hero-cta-group">
+            <a href="#ecosystems" class="btn-primary">
+                Conocer Ecosistemas
+                <span class="material-symbols-rounded">arrow_forward</span>
+            </a>
+            <a href="#mission" class="btn-secondary">Misión y Visión</a>
+        </div>
+
+        <div class="scroll-indicator">
+            <span>Scroll para explorar</span>
+            <span class="material-symbols-rounded">keyboard_arrow_down</span>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DE PROPÓSITO & SENSIBILIDAD ECOLÓGICA -->
+    <div class="purpose-section">
+        <div class="purpose-box">
+            <div class="purpose-content">
+                <blockquote class="purpose-quote">
+                    "La tecnología del futuro no busca dominar la Tierra, sino <span>sincronizarse con su latido</span> para garantizar la permanencia de la vida."
+                </blockquote>
+                <p class="purpose-desc">
+                    En <strong>FUTURE S.A.S.</strong> concebimos la Inteligencia Artificial, la Biotecnología y la Analítica de Datos como instrumentos al servicio del equilibrio bio-ambiental. Desarrollamos soluciones tecnológicas que protegen la biodiversidad, dignifican las culturas y aseguran la regeneración de los ecosistemas globales.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECCIÓN QUIÉNES SOMOS -->
+    <section id="about">
+        <div class="section-header">
+            <span class="section-tag">Nuestra Organización</span>
+            <h2 class="section-title">FUTURE S.A.S.</h2>
+        </div>
+
+        <div class="about-grid">
+            <div class="about-card">
+                <p class="about-text">
+                    <strong>FUTURE S.A.S.</strong> es una organización internacional de investigación, innovación y desarrollo tecnológico dedicada al avance de la Inteligencia Artificial, la Automatización Avanzada y la Biotecnología, con un firme compromiso hacia el desarrollo sostenible y la conservación ambiental.
+                </p>
+            </div>
+            <div class="about-card">
+                <p class="about-text">
+                    Nuestra arquitectura integra tecnologías emergentes con la gestión estratégica del conocimiento, impulsando ecosistemas inteligentes, ciudades conectadas y soluciones de alto impacto global para las generaciones del mañana.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN MISIÓN Y VISIÓN (TEXTOS INSTITUCIONALES EXACTOS) -->
+    <section id="mission">
+        <div class="section-header">
+            <span class="section-tag">Dirección Estratégica</span>
+            <h2 class="section-title">Misión & Visión</h2>
+        </div>
+
+        <div class="mission-vision-container">
+            <div class="mv-card">
+                <span class="material-symbols-rounded mv-icon">rocket_launch</span>
+                <h3 class="mv-title">Misión</h3>
+                <p class="mv-body">
+                    Impulsar el desarrollo de tecnologías vanguardistas como la Inteligencia Artificial, Robótica, Big Data y Biotecnología para resolver los desafíos globales más complejos, promoviendo la sostenibilidad ecológica, la eficiencia gubernamental digital y el progreso integral de la sociedad.
+                </p>
+            </div>
+
+            <div class="mv-card">
+                <span class="material-symbols-rounded mv-icon">visibility</span>
+                <h3 class="mv-title">Visión</h3>
+                <p class="mv-body">
+                    Posicionarnos para el año 2040 como el ecosistema de innovación tecnológica y desarrollo sostenible de mayor prestigio a nivel internacional, liderando la transición hacia un planeta inteligente, interconectado y ambientalmente equilibrado.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN ECOSISTEMAS TECNOLÓGICOS (ULULATO & FOSADI CON TEXTOS EXACTOS) -->
+    <section id="ecosystems">
+        <div class="section-header">
+            <span class="section-tag">Plataformas e Impacto</span>
+            <h2 class="section-title">Ecosistemas Tecnológicos</h2>
+        </div>
+
+        <div class="ecosystems-wrapper">
+            <!-- ULULATO CARD -->
+            <div class="eco-card ululato">
+                <div>
+                    <span class="eco-badge">Ecosistema Vivo</span>
+                    <h3 class="eco-title">ULULATO</h3>
+                    <p class="eco-body">
+                        ULULATO representa el nexo donde la Sabiduría Ancestral converge con el Futuro Digital. Una plataforma interactiva e inmersiva que georreferencia comunidades, rescata lenguas nativas y preserva la memoria cultural mediante tecnología WebGL y redes neuronales de conocimiento.
+                    </p>
+                </div>
+                <a href="https://prototipo.ululato.com" target="_blank" class="btn-primary" style="align-self: flex-start;">
+                    Explorar ULULATO
+                    <span class="material-symbols-rounded">open_in_new</span>
+                </a>
+            </div>
+
+            <!-- FOSADI CARD -->
+            <div class="eco-card fosadi">
+                <div>
+                    <span class="eco-badge">Investigación & Desarrollo</span>
+                    <h3 class="eco-title">FOSADI</h3>
+                    <p class="eco-body">
+                        FOSADI es el centro de investigación aplicada e incubación tecnológica de FUTURE S.A.S. Enfocado en la transición energética, analítica predictiva de Big Data y automatización industrial sostenible para organizaciones públicas y privadas.
+                    </p>
+                </div>
+                <a href="#contact" class="btn-secondary" style="align-self: flex-start; border-color: var(--brand-green-bright); color: var(--brand-green-bright);">
+                    Conocer FOSADI
+                    <span class="material-symbols-rounded">arrow_forward</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN OBJETIVOS ESTRATÉGICOS -->
+    <section id="objectives">
+        <div class="section-header">
+            <span class="section-tag">Horizonte de Acción</span>
+            <h2 class="section-title">Objetivos Estratégicos</h2>
+        </div>
+
+        <div class="objectives-grid">
+            <div class="obj-card">
+                <span class="obj-number">01</span>
+                <div class="obj-icon"><span class="material-symbols-rounded">psychology</span></div>
+                <h3 class="obj-title">Desarrollo de IA Ética</h3>
+                <p class="obj-desc">Investigación y despliegue de modelos de Machine Learning y Deep Learning orientados a la resolución de problemas científicos y sociales.</p>
+            </div>
+
+            <div class="obj-card">
+                <span class="obj-number">02</span>
+                <div class="obj-icon"><span class="material-symbols-rounded">eco</span></div>
+                <h3 class="obj-title">Sostenibilidad & Energía</h3>
+                <p class="obj-desc">Integración de energías limpias y sensores IoT para la conservación ambiental y la descarbonización industrial.</p>
+            </div>
+
+            <div class="obj-card">
+                <span class="obj-number">03</span>
+                <div class="obj-icon"><span class="material-symbols-rounded">location_city</span></div>
+                <h3 class="obj-title">Smart Cities</h3>
+                <p class="obj-desc">Diseño de entornos urbanos optimizados mediante algoritmos predictivos, automatización y gobierno digital transparente.</p>
+            </div>
+
+            <div class="obj-card">
+                <span class="obj-number">04</span>
+                <div class="obj-icon"><span class="material-symbols-rounded">dna</span></div>
+                <h3 class="obj-title">Biotecnología Avanzada</h3>
+                <p class="obj-desc">Innovación en biomedicina y monitoreo genómico para la preservación de la biodiversidad planetaria.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN ÁREAS DE INVESTIGACIÓN -->
+    <section id="research">
+        <div class="section-header">
+            <span class="section-tag">Líneas de Vanguardia</span>
+            <h2 class="section-title">Áreas de Investigación</h2>
+        </div>
+
+        <div class="hex-grid">
+            <div class="hex-item"><span class="material-symbols-rounded hex-icon">smart_toy</span><span class="hex-title">Inteligencia Artificial</span></div>
+            <div class="hex-item"><span class="material-symbols-rounded hex-icon">memory</span><span class="hex-title">Machine Learning</span></div>
+            <div class="hex-item"><span class="material-symbols-rounded hex-icon">hub</span><span class="hex-title">Deep Learning</span></div>
+            <div class="hex-item"><span class="material-symbols-rounded hex-icon">database</span><span class="hex-title">Big Data</span></div>
+            <div class="hex-item"><span class="material-symbols-rounded hex-icon">sensors</span><span class="hex-title">IoT & Sensores</span></div>
+            <div class="hex-item"><span class="material-symbols-rounded hex-icon">link</span><span class="hex-title">Blockchain</span></div>
+            <div class="hex-item"><span class="material-symbols-rounded hex-icon">biotech</span><span class="hex-title">Biotecnología</span></div>
+            <div class="hex-item"><span class="material-symbols-rounded hex-icon">solar_power</span><span class="hex-title">Energías Limpias</span></div>
+            <div class="hex-item"><span class="material-symbols-rounded hex-icon">location_city</span><span class="hex-title">Smart Cities</span></div>
+            <div class="hex-item"><span class="material-symbols-rounded hex-icon">forest</span><span class="hex-title">Gestión Ambiental</span></div>
+            <div class="hex-item"><span class="material-symbols-rounded hex-icon">account_balance</span><span class="hex-title">Gobierno Digital</span></div>
+            <div class="hex-item"><span class="material-symbols-rounded hex-icon">transform</span><span class="hex-title">Transformación</span></div>
+        </div>
+    </section>
+
+    <!-- METRICS -->
+    <div class="metrics-section" id="impact">
+        <div class="metrics-grid">
+            <div>
+                <div class="metric-number" data-target="100">+0</div>
+                <div class="metric-label">Proyectos Internacionales</div>
+            </div>
+            <div>
+                <div class="metric-number" data-target="50">+0</div>
+                <div class="metric-label">Aliados Estratégicos</div>
+            </div>
+            <div>
+                <div class="metric-number" data-target="20">+0</div>
+                <div class="metric-label">Líneas de Investigación</div>
+            </div>
+            <div>
+                <div class="metric-number" data-target="15">+0</div>
+                <div class="metric-label">Tecnologías Propias</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECCIÓN ROADMAP 2040 -->
+    <section id="roadmap">
+        <div class="section-header">
+            <span class="section-tag">Trascendencia Tecnológica</span>
+            <h2 class="section-title">Línea del Tiempo 2040</h2>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item left">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-year">2025 - 2028</div>
+                    <p class="timeline-desc">Despliegue global de la infraestructura WebGL ULULATO y consolidación de la red de laboratorios de innovación FOSADI.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item right">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-year">2029 - 2033</div>
+                    <p class="timeline-desc">Lanzamiento de la red de monitorización ambiental basada en Constelaciones de Micro-Satélites e Inteligencia Biológica.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item left">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-year">2034 - 2040</div>
+                    <p class="timeline-desc">Plena autonomía de ecosistemas urbanos descarbonizados y consolidación del modelo global de innovación de FUTURE S.A.S.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CALL TO ACTION -->
+    <section id="contact">
+        <div class="cta-box">
+            <h2 class="section-title" style="margin-bottom: 20px;">Construyamos Juntos un Planeta Inteligente</h2>
+            <p style="color: var(--text-muted); max-width: 650px; margin: 0 auto 40px auto; font-size: 1.15rem; line-height: 1.8;">
+                Únete a la red global de organizaciones, gobiernos e investigadores que están impulsando la transición tecnológica hacia la sostenibilidad con FUTURE S.A.S.
+            </p>
+            <a href="mailto:contacto@lsfuture.org" class="btn-primary">
+                Iniciar Alianza Estratégica
+                <span class="material-symbols-rounded">mail</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER OFICIAL -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <a href="#" class="brand-logo-wrap" style="margin-bottom:20px;">
+                    <svg class="brand-svg-icon" viewBox="0 0 200 200" fill="none">
+                        <path d="M100 22 C118 22 140 36 140 58 C140 76 122 86 104 86 C98 86 90 83 85 78 C80 72 80 64 84 50 C88 36 94 22 100 22 Z" fill="#00FF84" />
+                        <path d="M178 100 C178 118 164 140 142 140 C124 140 114 122 114 104 C114 98 117 90 122 85 C128 80 136 80 150 84 C164 88 178 94 178 100 Z" fill="#00FF84" />
+                        <path d="M100 178 C82 178 60 164 60 142 C60 124 78 114 96 114 C102 114 110 117 115 122 C120 128 120 136 116 150 C112 164 106 178 100 178 Z" fill="#00FF84" />
+                        <path d="M22 100 C22 82 36 60 58 60 C76 60 86 78 86 96 C86 102 83 110 78 115 C72 120 64 120 50 116 C36 112 22 106 22 100 Z" fill="#00FF84" />
+                    </svg>
+                    <div>
+                        <span class="brand-title-text">FUTURE S.A.S.</span>
+                    </div>
+                </a>
+                <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.7;">
+                    Organización internacional dedicada a la investigación aplicada en Inteligencia Artificial, Biotecnología y Desarrollo Sostenible.
+                </p>
+            </div>
+
+            <div>
+                <h4 style="color:#fff; margin-bottom:20px; font-family:var(--font-serif);">Ecosistemas</h4>
+                <p style="color:var(--text-muted); line-height:2;">ULULATO<br>FOSADI<br>Smart Cities AI</p>
+            </div>
+
+            <div>
+                <h4 style="color:#fff; margin-bottom:20px; font-family:var(--font-serif);">Ubicación</h4>
+                <p style="color:var(--text-muted); line-height:2;">Bogotá, Territorio Ancestral<br>Lat 4.7110° N, Long 74.0721° W</p>
+            </div>
+
+            <div>
+                <h4 style="color:#fff; margin-bottom:20px; font-family:var(--font-serif);">Contacto Oficial</h4>
+                <a href="mailto:contacto@lsfuture.org" style="color: var(--brand-green-bright); text-decoration:none; font-weight:600; font-family:var(--font-mono);">contacto@lsfuture.org</a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div>© 2026 FUTURE S.A.S. Todos los derechos reservados.</div>
+            <div>Innovación Inteligente para un Futuro Sostenible.</div>
+        </div>
+    </footer>
+
+    <!-- ==========================================================================
+       JAVASCRIPT: ENGINE THREE.JS (FÍSICA 3D CINEMÁTICA CON DAMPING ULTRA-SUAVE)
+       ========================================================================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- 1. MOUSE TRACKER & CURSOR MAGNÉTICO ---
+            const dot = document.querySelector('.cursor-dot');
+            const circle = document.querySelector('.cursor-circle');
+            
+            let mouseX = 0; // Coordenadas centradas normalizadas (-1 a +1)
+            let mouseY = 0;
+            let pageX = window.innerWidth / 2;
+            let pageY = window.innerHeight / 2;
+            let circleX = pageX, circleY = pageY;
+
+            window.addEventListener('mousemove', (e) => {
+                pageX = e.clientX;
+                pageY = e.clientY;
+
+                // Coordenadas normalizadas (-1 a +1)
+                mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+                mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+
+                dot.style.left = `${pageX}px`;
+                dot.style.top = `${pageY}px`;
+
+                const hoverable = e.target.closest('a, button, .about-card, .mv-card, .eco-card, .obj-card, .hex-item');
+                if (hoverable) {
+                    circle.style.width = '60px';
+                    circle.style.height = '60px';
+                    circle.style.borderColor = 'var(--brand-green-bright)';
+                    circle.style.background = 'rgba(0, 255, 132, 0.08)';
+                } else {
+                    circle.style.width = '44px';
+                    circle.style.height = '44px';
+                    circle.style.borderColor = 'rgba(0, 255, 132, 0.35)';
+                    circle.style.background = 'transparent';
+                }
+            });
+
+            function renderCursor() {
+                circleX += (pageX - circleX) * 0.15;
+                circleY += (pageY - circleY) * 0.15;
+                circle.style.left = `${circleX}px`;
+                circle.style.top = `${circleY}px`;
+                requestAnimationFrame(renderCursor);
+            }
+            renderCursor();
+
+            // --- 2. THREE.JS 3D PLANETA CON AMORTIGUACIÓN Y LERP ULTRA-SUAVE ---
+            const canvas = document.getElementById('webgl-bg');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 22;
+
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Grupo Contenedor del Planeta
+            const globeGroup = new THREE.Group();
+            scene.add(globeGroup);
+
+            // Esfera de Partículas Bio-Ecológicas
+            const globeRadius = 9;
+            const particleCount = 2800;
+            const globeGeo = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+
+            // Colores estrictos corporativos
+            const colorGreenBright = new THREE.Color(0x00FF84);
+            const colorGreenMid = new THREE.Color(0x00E676);
+
+            for (let i = 0; i < particleCount; i++) {
+                const phi = Math.acos(-1 + (2 * i) / particleCount);
+                const theta = Math.sqrt(particleCount * Math.PI) * phi;
+
+                const x = globeRadius * Math.cos(theta) * Math.sin(phi);
+                const y = globeRadius * Math.sin(theta) * Math.sin(phi);
+                const z = globeRadius * Math.cos(phi);
+
+                positions[i * 3] = x;
+                positions[i * 3 + 1] = y;
+                positions[i * 3 + 2] = z;
+
+                const color = Math.random() > 0.35 ? colorGreenBright : colorGreenMid;
+                colors[i * 3] = color.r;
+                colors[i * 3 + 1] = color.g;
+                colors[i * 3 + 2] = color.b;
+            }
+
+            globeGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            globeGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+            const globeMat = new THREE.PointsMaterial({
+                size: 0.15,
+                vertexColors: true,
+                transparent: true, opacity: 0.85,
+                blending: THREE.AdditiveBlending
+            });
+
+            const globePoints = new THREE.Points(globeGeo, globeMat);
+            globeGroup.add(globePoints);
+
+            // Anillos Orbitantes de Energía Verde Bio-Neón
+            const ringGeo1 = new THREE.TorusGeometry(12, 0.035, 16, 120);
+            const ringMat1 = new THREE.MeshBasicMaterial({ color: 0x00FF84, transparent: true, opacity: 0.35 });
+            const ringMesh1 = new THREE.Mesh(ringGeo1, ringMat1);
+            ringMesh1.rotation.x = Math.PI / 3;
+            globeGroup.add(ringMesh1);
+
+            const ringGeo2 = new THREE.TorusGeometry(14, 0.025, 16, 120);
+            const ringMat2 = new THREE.MeshBasicMaterial({ color: 0x00E676, transparent: true, opacity: 0.25 });
+            const ringMesh2 = new THREE.Mesh(ringGeo2, ringMat2);
+            ringMesh2.rotation.y = Math.PI / 4;
+            globeGroup.add(ringMesh2);
+
+            // VARIABLES DE INTERACCIÓN CON AMORTIGUACIÓN CINEMÁTICA (SULFA-SUAVE)
+            let smoothRotX = 0;
+            let smoothRotY = 0;
+            let smoothPosX = 0;
+            let smoothPosY = 0;
+
+            const clock = new THREE.Clock();
+
+            function animateWebGL() {
+                const elapsedTime = clock.getElapsedTime();
+
+                // 1. Amplitud Sutil de Rotación y Traslación (Valores bajos = movimiento fluido sin brusquedad)
+                const targetRotX = mouseY * 0.22; 
+                const targetRotY = mouseX * 0.35;
+
+                const targetPosX = mouseX * 0.6;  
+                const targetPosY = -mouseY * 0.4;
+
+                // 2. Interpolación ultra-suave (Bajo factor Lerp 0.018 para inercia sedosa)
+                smoothRotX += (targetRotX - smoothRotX) * 0.02;
+                smoothRotY += (targetRotY - smoothRotY) * 0.02;
+
+                smoothPosX += (targetPosX - smoothPosX) * 0.015;
+                smoothPosY += (targetPosY - smoothPosY) * 0.015;
+
+                // 3. Aplicación al planeta (Giro continuo base + Inclinación suave del cursor)
+                globeGroup.rotation.x = smoothRotX;
+                globeGroup.rotation.y = (elapsedTime * 0.04) + smoothRotY;
+
+                globeGroup.position.x = smoothPosX;
+                globeGroup.position.y = smoothPosY;
+
+                // Animación de los anillos orbitantes
+                ringMesh1.rotation.z = elapsedTime * 0.06;
+                ringMesh2.rotation.z = -elapsedTime * 0.04;
+
+                renderer.render(scene, camera);
+                requestAnimationFrame(animateWebGL);
+            }
+            animateWebGL();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            // --- 3. NAVBAR SCROLL ---
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) { navbar.classList.add('scrolled'); }
+                else { navbar.classList.remove('scrolled'); }
+            });
+
+            // --- 4. GSAP ANIMATIONS & CONTADOR DE MÉTRICAS ---
+            gsap.registerPlugin(ScrollTrigger);
+
+            gsap.from('.hero-title', { opacity: 0, y: 50, duration: 1.2, ease: 'power4.out', delay: 0.2 });
+            gsap.from('.hero-subtitle', { opacity: 0, y: 30, duration: 1.2, ease: 'power4.out', delay: 0.4 });
+            gsap.from('.hero-cta-group', { opacity: 0, y: 20, duration: 1, ease: 'power4.out', delay: 0.6 });
+
+            gsap.utils.toArray('.about-card, .mv-card, .eco-card, .obj-card, .purpose-box').forEach((el) => {
+                gsap.from(el, {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top 85%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    opacity: 0, y: 40, duration: 1, ease: 'power3.out'
+                });
+            });
+
+            document.querySelectorAll('.metric-number').forEach((metric) => {
+                const target = parseInt(metric.getAttribute('data-target'));
+                ScrollTrigger.create({
+                    trigger: metric,
+                    start: 'top 88%',
+                    onEnter: () => {
+                        let count = 0;
+                        const interval = setInterval(() => {
+                            count += Math.ceil(target / 30);
+                            if (count >= target) { count = target; clearInterval(interval); }
+                            metric.innerText = `+${count}`;
+                        }, 35);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
