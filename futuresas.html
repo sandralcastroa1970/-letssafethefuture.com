@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
+
     <!-- MATERIAL SYMBOLS -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
 
@@ -735,29 +735,127 @@
         }
         .metric-label { font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; }
 
-        /* ROADMAP */
-        .timeline { position: relative; max-width: 1000px; margin: 0 auto; padding: 40px 0; }
-        .timeline::before {
-            content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 2px;
-            background: linear-gradient(180deg, var(--brand-green-bright), var(--brand-navy), transparent);
-            transform: translateX(-50%);
+        /* ===== ROADMAP · LÍNEA DE TIEMPO 3D (CORREDOR TEMPORAL) ===== */
+        .tl3d {
+            position: relative;
+            max-width: 1100px; margin: 0 auto;
+            padding: 30px 0 60px;
+            perspective: 1600px;
+            perspective-origin: 50% 40%;
         }
-        .timeline-item { position: relative; width: 50%; padding: 20px 40px; box-sizing: border-box; }
-        .timeline-item.left { left: 0; text-align: right; }
-        .timeline-item.right { left: 50%; text-align: left; }
-        .timeline-dot {
-            position: absolute; top: 30px; width: 16px; height: 16px; border-radius: 50%;
-            background: var(--brand-green-bright); box-shadow: 0 0 15px var(--brand-green-bright);
+        .tl3d-spine {
+            position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; transform: translateX(-50%);
+            background: linear-gradient(180deg, rgba(0,255,132,0.05), rgba(0,255,132,0.22) 12%, rgba(0,255,132,0.22) 88%, rgba(0,255,132,0.05));
+            border-radius: 3px;
         }
-        .timeline-item.left .timeline-dot { right: -8px; }
-        .timeline-item.right .timeline-dot { left: -8px; }
-
-        .timeline-content {
-            background: var(--brand-navy-card); border: 1px solid var(--border-glass);
-            border-radius: 16px; padding: 28px; backdrop-filter: blur(10px);
+        .tl3d-spine::before {
+            content: ''; position: absolute; inset: -2px -7px; border-radius: 8px;
+            background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(0,255,132,0.12), transparent 70%);
+            filter: blur(3px);
         }
-        .timeline-year { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; color: var(--brand-green-bright); margin-bottom: 8px; }
-        .timeline-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+        .tl3d-beam {
+            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 5px; height: 0%; border-radius: 5px;
+            background: linear-gradient(180deg, var(--brand-green-bright), var(--brand-green));
+            box-shadow: 0 0 18px var(--brand-green-glow), 0 0 46px rgba(0,255,132,0.35);
+            transition: height .12s linear;
+        }
+        .tl3d-beam::after {
+            content: ''; position: absolute; bottom: -7px; left: 50%; transform: translateX(-50%);
+            width: 16px; height: 16px; border-radius: 50%;
+            background: var(--brand-green-bright);
+            box-shadow: 0 0 22px var(--brand-green-bright), 0 0 46px var(--brand-green-glow);
+        }
+        .tl3d-track { position: relative; display: flex; flex-direction: column; gap: 74px; transform-style: preserve-3d; }
+        .tl3d-item {
+            position: relative; width: 50%;
+            transform-style: preserve-3d;
+            will-change: transform, opacity;
+        }
+        .tl3d-item.left  { padding-right: 56px; align-self: flex-start; text-align: right; }
+        .tl3d-item.right { padding-left: 56px;  align-self: flex-end;   text-align: left;  }
+        .tl3d-node {
+            position: absolute; top: 34px; width: 22px; height: 22px; z-index: 4;
+            transform: translateZ(40px);
+        }
+        .tl3d-item.left  .tl3d-node { right: -67px; }
+        .tl3d-item.right .tl3d-node { left: -67px;  }
+        .tl3d-node .core {
+            position: absolute; inset: 5px; border-radius: 50%;
+            background: var(--brand-navy); border: 2px solid var(--border-emerald);
+            box-shadow: inset 0 0 8px rgba(0,255,132,0.3);
+            transition: background .4s var(--ease-lux), border-color .4s, box-shadow .4s;
+        }
+        .tl3d-node .ring {
+            position: absolute; inset: -6px; border-radius: 50%;
+            border: 1px solid rgba(0,255,132,0.25);
+            animation: tl3dOrbit 5s linear infinite;
+        }
+        .tl3d-node .ring::before {
+            content: ''; position: absolute; top: -3px; left: 50%; width: 5px; height: 5px; margin-left: -2.5px;
+            border-radius: 50%; background: var(--brand-green-bright); box-shadow: 0 0 10px var(--brand-green-bright);
+        }
+        .tl3d-item.active .tl3d-node .core {
+            background: var(--brand-green-bright); border-color: var(--brand-green-bright);
+            box-shadow: 0 0 16px var(--brand-green-bright), 0 0 34px var(--brand-green-glow);
+            animation: tl3dPulse 1.8s ease-in-out infinite;
+        }
+        .tl3d-card {
+            position: relative; display: inline-block; width: 100%;
+            background: linear-gradient(160deg, var(--brand-navy-card), rgba(2,6,23,0.92));
+            border: 1px solid var(--border-glass); border-radius: 22px;
+            padding: 34px 34px 30px;
+            backdrop-filter: blur(14px);
+            transform-style: preserve-3d;
+            transition: transform .18s var(--ease-lux), border-color .45s var(--ease-lux), box-shadow .45s var(--ease-lux);
+            box-shadow: 0 26px 60px rgba(0,0,0,0.6);
+            text-align: left;
+        }
+        .tl3d-card::before {
+            content: ''; position: absolute; top: 0; left: 24px; right: 24px; height: 2px; border-radius: 2px;
+            background: linear-gradient(90deg, transparent, var(--brand-green-bright), transparent);
+            opacity: .55; transition: opacity .45s;
+        }
+        .tl3d-item:hover .tl3d-card {
+            border-color: var(--border-emerald);
+            box-shadow: 0 40px 90px rgba(0,0,0,0.7), 0 0 60px rgba(0,255,132,0.14);
+        }
+        .tl3d-item:hover .tl3d-card::before { opacity: 1; }
+        .tl3d-index {
+            position: absolute; top: 14px; right: 22px;
+            font-family: var(--font-display); font-weight: 900; font-size: 3.4rem; line-height: 1;
+            color: rgba(0,255,132,0.10); letter-spacing: -.02em; pointer-events: none;
+            transform: translateZ(72px);
+            transition: color .45s, text-shadow .45s, transform .45s var(--ease-lux);
+        }
+        .tl3d-item:hover .tl3d-index { color: var(--brand-green-bright); text-shadow: 0 0 26px var(--brand-green-glow); transform: translateZ(96px) scale(1.06); }
+        .tl3d-badge {
+            display: inline-flex; align-items: center; gap: 8px; margin-bottom: 14px;
+            padding: 6px 15px; border-radius: 20px;
+            background: rgba(0,255,132,0.09); border: 1px solid var(--border-emerald);
+            color: var(--brand-green-bright); font-family: var(--font-mono);
+            font-size: .66rem; letter-spacing: .22em; text-transform: uppercase; font-weight: 700;
+            transform: translateZ(30px);
+        }
+        .tl3d-badge .material-symbols-rounded { font-size: 15px; }
+        .tl3d-year {
+            font-family: var(--font-display); font-weight: 800; font-size: 1.7rem; color: #fff;
+            letter-spacing: -.01em; margin-bottom: 4px; transform: translateZ(52px);
+            text-shadow: 0 2px 20px rgba(0,0,0,0.6);
+        }
+        .tl3d-phase {
+            font-family: var(--font-mono); font-size: .74rem; letter-spacing: .16em; text-transform: uppercase;
+            color: var(--brand-green-bright); margin-bottom: 16px; transform: translateZ(44px);
+        }
+        .tl3d-desc { color: var(--text-muted); font-size: .98rem; line-height: 1.72; transform: translateZ(26px); }
+        .tl3d-card .tl3d-spot {
+            position: absolute; inset: 0; border-radius: 22px; pointer-events: none; opacity: 0;
+            background: radial-gradient(320px circle at var(--mx,50%) var(--my,50%), rgba(0,255,132,0.16), transparent 60%);
+            transition: opacity .4s var(--ease-lux); mix-blend-mode: screen;
+        }
+        .tl3d-item:hover .tl3d-card .tl3d-spot { opacity: 1; }
+        @keyframes tl3dOrbit { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+        @keyframes tl3dPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.14); } }
 
         /* CALL TO ACTION */
         .cta-box {
@@ -913,10 +1011,11 @@
             section { padding: 80px 30px; }
             .about-grid, .ecosystems-wrapper, .flip-grid { grid-template-columns: 1fr; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
-            .timeline::before { left: 20px; }
-            .timeline-item { width: 100%; padding-left: 50px; text-align: left !important; }
-            .timeline-item.right { left: 0; }
-            .timeline-dot { left: 12px !important; }
+            .tl3d { perspective: 1200px; }
+            .tl3d-spine, .tl3d-beam { left: 20px; }
+            .tl3d-item { width: 100%; }
+            .tl3d-item.left, .tl3d-item.right { padding: 0 0 0 56px; text-align: left; align-self: stretch; }
+            .tl3d-item.left .tl3d-node, .tl3d-item.right .tl3d-node { left: 9px; right: auto; }
         }
 
         @media (max-width: 768px) {
@@ -990,6 +1089,8 @@
             html { scroll-behavior: auto; }
             .hero-title, .grain-overlay, .footer-marquee-track { animation: none; }
             #webgl-bg { transition: opacity 0.4s linear; }
+            .tl3d-node .ring, .tl3d-item.active .tl3d-node .core { animation: none; }
+            .tl3d-beam { transition: none; }
         }
     </style>
 </head>
@@ -1305,36 +1406,52 @@
         </div>
     </div>
 
-    <!-- SECCIÓN ROADMAP 2040 -->
+    <!-- SECCIÓN ROADMAP 2040 · LÍNEA DE TIEMPO 3D -->
     <section id="roadmap">
         <div class="section-header">
             <span class="section-tag">Trascendencia Tecnológica</span>
             <h2 class="section-title">Línea del Tiempo 2040</h2>
         </div>
 
-        <div class="timeline">
-            <div class="timeline-item left">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-year">2025 - 2028</div>
-                    <p class="timeline-desc">Despliegue global de la infraestructura WebGL ULULATO y consolidación de la red de laboratorios de innovación FOSADI.</p>
-                </div>
-            </div>
+        <div class="tl3d" id="tl3d">
+            <div class="tl3d-spine"><div class="tl3d-beam" id="tl3dBeam"></div></div>
 
-            <div class="timeline-item right">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-year">2029 - 2033</div>
-                    <p class="timeline-desc">Lanzamiento de la red de monitorización ambiental basada en Constelaciones de Micro-Satélites e Inteligencia Biológica.</p>
-                </div>
-            </div>
+            <div class="tl3d-track">
+                <article class="tl3d-item left" data-side="-1">
+                    <div class="tl3d-node"><span class="ring"></span><span class="core"></span></div>
+                    <div class="tl3d-card">
+                        <span class="tl3d-spot"></span>
+                        <span class="tl3d-index">01</span>
+                        <span class="tl3d-badge"><span class="material-symbols-rounded">rocket_launch</span> Fase de Despliegue</span>
+                        <div class="tl3d-year">2025 &mdash; 2028</div>
+                        <div class="tl3d-phase">Infraestructura &amp; Laboratorios</div>
+                        <p class="tl3d-desc">Despliegue global de la infraestructura WebGL ULULATO y consolidación de la red de laboratorios de innovación FOSADI.</p>
+                    </div>
+                </article>
 
-            <div class="timeline-item left">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-year">2034 - 2040</div>
-                    <p class="timeline-desc">Plena autonomía de ecosistemas urbanos descarbonizados y consolidación del modelo global de innovación de FUTURE S.A.S.</p>
-                </div>
+                <article class="tl3d-item right" data-side="1">
+                    <div class="tl3d-node"><span class="ring"></span><span class="core"></span></div>
+                    <div class="tl3d-card">
+                        <span class="tl3d-spot"></span>
+                        <span class="tl3d-index">02</span>
+                        <span class="tl3d-badge"><span class="material-symbols-rounded">satellite_alt</span> Fase de Expansión</span>
+                        <div class="tl3d-year">2029 &mdash; 2033</div>
+                        <div class="tl3d-phase">Monitorización Ambiental</div>
+                        <p class="tl3d-desc">Lanzamiento de la red de monitorización ambiental basada en constelaciones de micro-satélites e inteligencia biológica.</p>
+                    </div>
+                </article>
+
+                <article class="tl3d-item left" data-side="-1">
+                    <div class="tl3d-node"><span class="ring"></span><span class="core"></span></div>
+                    <div class="tl3d-card">
+                        <span class="tl3d-spot"></span>
+                        <span class="tl3d-index">03</span>
+                        <span class="tl3d-badge"><span class="material-symbols-rounded">public</span> Fase de Consolidación</span>
+                        <div class="tl3d-year">2034 &mdash; 2040</div>
+                        <div class="tl3d-phase">Ecosistemas Autónomos</div>
+                        <p class="tl3d-desc">Plena autonomía de ecosistemas urbanos descarbonizados y consolidación del modelo global de innovación de FUTURE S.A.S.</p>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
@@ -1403,7 +1520,7 @@
     </footer>
 
     <!-- ==========================================================================
-       JAVASCRIPT: ENGINE THREE.JS + INTERACCIÓN 3D TILT DE OBJETIVOS ESTRATÉGICOS
+       JAVASCRIPT: ENGINE THREE.JS + INTERACCIÓN 3D TILT + LÍNEA DE TIEMPO 3D
        ========================================================================== -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -1428,7 +1545,7 @@
                 dot.style.left = `${pageX}px`;
                 dot.style.top = `${pageY}px`;
 
-                const hoverable = e.target.closest('a, button, .about-card, .flip-card, .eco-card, .obj-card, .hex-item');
+                const hoverable = e.target.closest('a, button, .about-card, .flip-card, .eco-card, .obj-card, .hex-item, .tl3d-card');
                 if (hoverable) {
                     circle.style.width = '60px';
                     circle.style.height = '60px';
@@ -1904,6 +2021,78 @@
                     btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
                 });
             }
+
+            // --- 7. LÍNEA DE TIEMPO 3D (CORREDOR TEMPORAL) ---
+            (function initTL3D() {
+                const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                const wide = window.matchMedia('(min-width:1025px)').matches;
+                const items = Array.prototype.slice.call(document.querySelectorAll('.tl3d-item'));
+                const beam = document.getElementById('tl3dBeam');
+                const root = document.getElementById('tl3d');
+                if (!items.length) return;
+
+                // Rotación base de cada tarjeta para formar el "corredor" 3D
+                function baseRot(item) { return wide ? (parseFloat(item.getAttribute('data-side') || '0') * 9) : 0; }
+                items.forEach((item) => {
+                    const card = item.querySelector('.tl3d-card');
+                    if (card) card.style.transform = 'rotateY(' + baseRot(item) + 'deg)';
+                });
+
+                // 1) Ensamblaje desde la profundidad al entrar en viewport
+                if (!reduce) {
+                    items.forEach((item) => {
+                        const side = parseFloat(item.getAttribute('data-side') || '0');
+                        gsap.fromTo(item,
+                            { opacity: 0, y: 80, z: -260, rotationY: side * 26, rotationX: 8 },
+                            { opacity: 1, y: 0, z: 0, rotationY: 0, rotationX: 0, duration: 1.1, ease: 'power3.out',
+                              scrollTrigger: { trigger: item, start: 'top 88%', toggleActions: 'play none none reverse' } }
+                        );
+                    });
+                } else {
+                    items.forEach((item) => { item.style.opacity = 1; });
+                }
+
+                // 2) Haz de energía que se llena con el scroll + encendido de nodos
+                ScrollTrigger.create({
+                    trigger: root, start: 'top 65%', end: 'bottom 80%', scrub: true,
+                    onUpdate: (self) => { if (beam) beam.style.height = (self.progress * 100).toFixed(2) + '%'; }
+                });
+                items.forEach((item) => {
+                    ScrollTrigger.create({
+                        trigger: item, start: 'top 62%', end: 'bottom 40%',
+                        onEnter: () => item.classList.add('active'),
+                        onEnterBack: () => item.classList.add('active'),
+                        onLeaveBack: () => item.classList.remove('active')
+                    });
+                });
+
+                // 3) Tilt 3D con el cursor + halo que sigue al puntero (solo puntero fino)
+                if (!reduce && window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+                    items.forEach((item) => {
+                        const card = item.querySelector('.tl3d-card');
+                        const spot = item.querySelector('.tl3d-spot');
+                        if (!card) return;
+                        let raf = null, tx = 0, ty = 0;
+                        card.addEventListener('mousemove', (e) => {
+                            const r = card.getBoundingClientRect();
+                            const px = (e.clientX - r.left) / r.width - 0.5;
+                            const py = (e.clientY - r.top) / r.height - 0.5;
+                            tx = baseRot(item) + px * 12;
+                            ty = -py * 10;
+                            if (spot) { spot.style.setProperty('--mx', (px + 0.5) * 100 + '%'); spot.style.setProperty('--my', (py + 0.5) * 100 + '%'); }
+                            if (!raf) raf = requestAnimationFrame(() => {
+                                card.style.transform = 'rotateY(' + tx.toFixed(2) + 'deg) rotateX(' + ty.toFixed(2) + 'deg)';
+                                raf = null;
+                            });
+                        });
+                        card.addEventListener('mouseleave', () => {
+                            card.style.transform = 'rotateY(' + baseRot(item) + 'deg) rotateX(0deg)';
+                        });
+                    });
+                }
+
+                ScrollTrigger.refresh();
+            })();
         });
     </script>
 </body>
