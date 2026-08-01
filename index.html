@@ -1551,7 +1551,10 @@
                 <div class="flip-card-inner">
                     <!-- FRENTE: FOTO OFICIAL GITHUB + TÍTULO -->
                     <div class="flip-card-front">
-                        <img src="https://raw.githubusercontent.com/sandralcastroa1970/-letssafethefuture.com/main/mision.jpg" alt="Misión FUTURE S.A.S." class="flip-card-img" loading="lazy" onerror="imgFallback(this)">
+                        <video class="flip-card-img" id="misionVideo" autoplay muted loop playsinline preload="auto" aria-label="Misión FUTURE S.A.S." style="pointer-events:none;">
+                            <source src="mision.mp4" type="video/mp4">
+                            <source src="https://sandralcastroa1970.github.io/-letssafethefuture.com/mision.mp4" type="video/mp4">
+                        </video>
                         <div class="flip-card-front-overlay">
                             <span class="flip-card-badge">Estrategia Global</span>
                             <h3 class="flip-card-front-title">MISIÓN</h3>
@@ -1578,7 +1581,10 @@
                 <div class="flip-card-inner">
                     <!-- FRENTE: FOTO OFICIAL GITHUB + TÍTULO -->
                     <div class="flip-card-front">
-                        <img src="https://raw.githubusercontent.com/sandralcastroa1970/-letssafethefuture.com/main/vision.jpg" alt="Visión FUTURE S.A.S." class="flip-card-img" loading="lazy" onerror="imgFallback(this)">
+                        <video class="flip-card-img" id="visionVideo" autoplay muted loop playsinline preload="auto" aria-label="Visión FUTURE S.A.S." style="pointer-events:none;">
+                            <source src="vision.mp4" type="video/mp4">
+                            <source src="https://sandralcastroa1970.github.io/-letssafethefuture.com/vision.mp4" type="video/mp4">
+                        </video>
                         <div class="flip-card-front-overlay">
                             <span class="flip-card-badge">Proyección 2040</span>
                             <h3 class="flip-card-front-title">VISIÓN</h3>
@@ -2764,6 +2770,26 @@
                 setTimeout(function(){ if (document.getElementById('preloader') && !finish.done) finish(); }, 6500);
             })();
         });
+    </script>
+    <!-- Reproducción de videos de las tarjetas (muted + loop + autoplay, con respaldo) -->
+    <script>
+      (function(){
+        function initVideos(){
+          var vids = Array.prototype.slice.call(document.querySelectorAll('video.flip-card-img'));
+          vids.forEach(function(v){
+            v.muted = true; v.defaultMuted = true; v.loop = true; v.playsInline = true;
+            function tryPlay(){ try { var p = v.play(); if (p && p.catch) p.catch(function(){}); } catch(e){} }
+            v.addEventListener('loadeddata', tryPlay);
+            v.addEventListener('canplay', tryPlay);
+            tryPlay();
+            function fail(){ var f = v.closest ? v.closest('.flip-card-front') : null; if (f) f.classList.add('noimg'); v.style.display = 'none'; }
+            v.addEventListener('error', fail);
+            var s = v.querySelector('source'); if (s) s.addEventListener('error', fail);
+          });
+        }
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initVideos);
+        else initVideos();
+      })();
     </script>
 </body>
 </html>
