@@ -9,7 +9,7 @@
     <!-- FUENTES TIPOGRÁFICAS DE CLASE MUNDIAL -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- MATERIAL SYMBOLS -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
@@ -34,7 +34,7 @@
             --text-muted: #94A3B8;
             --border-glass: rgba(255, 255, 255, 0.1);
             --border-emerald: rgba(0, 255, 132, 0.35);
-            --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-display: 'Sora', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
             --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             --font-mono: 'Space Mono', monospace;
             --ease-lux: cubic-bezier(0.16, 1, 0.3, 1);
@@ -649,7 +649,7 @@
         .obj-number {
             font-family: var(--font-display);
             font-size: 3.8rem;
-            font-weight: 900;
+            font-weight: 700;
             color: rgba(0, 255, 132, 0.12);
             position: absolute;
             top: 20px; right: 28px;
@@ -730,7 +730,7 @@
         }
         .metric-number {
             font-family: var(--font-display); font-size: clamp(3rem, 5vw, 4.5rem);
-            font-weight: 900; color: var(--brand-green-bright);
+            font-weight: 700; color: var(--brand-green-bright);
             text-shadow: 0 0 30px var(--brand-green-glow); line-height: 1; margin-bottom: 10px;
         }
         .metric-label { font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; }
@@ -1092,6 +1092,71 @@
             .tl3d-node .ring, .tl3d-item.active .tl3d-node .core { animation: none; }
             .tl3d-beam { transition: none; }
         }
+
+        /* ==========================================================================
+           SISTEMA TIPOGRÁFICO DE ALTO IMPACTO (FUTURE S.A.S.)
+           ========================================================================== */
+        :root {
+            /* Tipografías Oficiales de la Marca */
+            --font-display: 'Sora', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            /* Escala Tipográfica Fluida (Responsive Pro) */
+            --fs-hero: clamp(2.8rem, 6.2vw, 5.6rem);
+            --fs-h2: clamp(2.0rem, 3.5vw, 3.2rem);
+            --fs-h3: clamp(1.35rem, 2.2vw, 1.85rem);
+            --fs-body: clamp(0.98rem, 1.1vw, 1.12rem);
+            --fs-label: clamp(0.70rem, 0.8vw, 0.82rem);
+        }
+        /* Renderizado Suizo de Alta Precision */
+        html, body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.65;
+            color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+        /* Titulares de Marca con Sora (Sólida, Futurista y Bio-Tecnológica) */
+        h1, h2, h3, .hero-title, .section-title, .purpose-quote {
+            font-family: var(--font-display);
+            letter-spacing: -0.025em;
+            line-height: 1.12;
+        }
+        .hero-title {
+            font-size: var(--fs-hero);
+            font-weight: 800;
+            letter-spacing: 0.08em; /* Elegancia cinematográfica */
+        }
+        .section-title {
+            font-size: var(--fs-h2);
+            font-weight: 700;
+        }
+        /* Manifiesto / Cita del Propósito */
+        .purpose-quote {
+            font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+            font-weight: 600;
+            line-height: 1.32;
+            color: #FFFFFF;
+        }
+        /* Párrafos e Información Institucional */
+        p, .about-text, .purpose-desc, .eco-body, .mv-body {
+            font-family: var(--font-body);
+            font-size: var(--fs-body);
+            font-weight: 400;
+            color: var(--text-muted);
+            line-height: 1.75;
+        }
+        /* Badges, Etiquetas y Métricas Técnicas */
+        .hero-badge, .section-tag, .purpose-eyebrow, .about-kicker, .flip-card-badge, .eco-badge, .tl3d-badge {
+            font-family: var(--font-mono);
+            font-size: var(--fs-label);
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
     </style>
 </head>
 <body>
