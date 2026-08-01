@@ -2781,13 +2781,13 @@
 
                 gsap.set('#preloader .pl-logo-svg', { scale: 0.94, transformOrigin: '50% 50%' });
                 gsap.set('#preloader .pl-draw', { strokeDashoffset: 1, fillOpacity: 0, strokeOpacity: 1 });
-                gsap.timeline({ onComplete: function(){ gsap.delayedCall(0.3, finish); } })
-                    .to('#preloader .pl-logo-svg', { scale: 1, duration: 1.5, ease: 'power2.out' }, 0)
-                    .to('#preloader .pl-draw', { strokeDashoffset: 0, duration: 1.35, ease: 'power2.inOut', stagger: 0.12 }, 0)
-                    .to('#preloader .pl-draw', { fillOpacity: 1, duration: 0.6, ease: 'power2.out', stagger: 0.05 }, '-=0.4')
-                    .to('#preloader .pl-draw', { strokeOpacity: 0, duration: 0.6, ease: 'power2.out' }, '<')
-                    .to('#preloader .pl-logo-svg', { filter: 'drop-shadow(0 0 46px rgba(57,255,72,0.6))', duration: 0.5, ease: 'power2.out' }, '<');
-                setTimeout(function(){ if (document.getElementById('preloader') && !finish.done) finish(); }, 6500);
+                gsap.timeline({ onComplete: function(){ gsap.delayedCall(0.45, finish); } })
+                    .to('#preloader .pl-logo-svg', { scale: 1, duration: 1.9, ease: 'power2.out' }, 0)
+                    .to('#preloader .pl-draw', { strokeDashoffset: 0, duration: 1.7, ease: 'power2.inOut', stagger: 0.15 }, 0)
+                    .to('#preloader .pl-draw', { fillOpacity: 1, duration: 0.75, ease: 'power2.out', stagger: 0.06 }, '-=0.45')
+                    .to('#preloader .pl-draw', { strokeOpacity: 0, duration: 0.7, ease: 'power2.out' }, '<')
+                    .to('#preloader .pl-logo-svg', { filter: 'drop-shadow(0 0 46px rgba(57,255,72,0.6))', duration: 0.6, ease: 'power2.out' }, '<');
+                setTimeout(function(){ if (document.getElementById('preloader') && !finish.done) finish(); }, 7500);
             })();
         });
     </script>
