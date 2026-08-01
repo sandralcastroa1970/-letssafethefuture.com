@@ -19,6 +19,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
+    <!-- POST-PROCESADO WEBGL (Bloom volumétrico real) -->
+    <script src="https://unpkg.com/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+
     <style>
         /* ==========================================================================
            1. CÓDIGO CROMÁTICO OFICIAL DE MARCA (FUTURE S.A.S.)
@@ -1107,7 +1115,7 @@
         @media (max-width: 768px) {
             .nav-links, .btn-header { display: none; }
             .menu-toggle { display: flex; }
-            .hero-title { font-size: 2.5rem; letter-spacing: 0.15em; }
+            .hero-title { letter-spacing: 0.06em; }
             .footer-grid { grid-template-columns: 1fr; }
             .footer-bottom { flex-direction: column; gap: 15px; text-align: center; }
             .purpose-box { padding: 50px 24px; }
@@ -2206,6 +2214,25 @@
                 gsap.to(globeGroup.scale, { x: 1, y: 1, z: 1, duration: 2.6, ease: 'power3.out', delay: 0.15 });
             }
 
+            // ---------- POST-PROCESADO: Bloom real (con reserva si el CDN falla) ----------
+            let composer = null;
+            if (!prefersReduced && THREE.EffectComposer && THREE.UnrealBloomPass && THREE.RenderPass) {
+                try {
+                    composer = new THREE.EffectComposer(renderer);
+                    composer.addPass(new THREE.RenderPass(scene, camera));
+                    const bloom = new THREE.UnrealBloomPass(
+                        new THREE.Vector2(window.innerWidth, window.innerHeight),
+                        0.62,   // intensidad
+                        0.45,   // radio
+                        0.62    // umbral: solo lo más brillante florece
+                    );
+                    composer.addPass(bloom);
+                } catch (e) { composer = null; }
+            }
+
+            // ---------- SCROLLYTELLING: la cámara narra según la sección ----------
+            const camState = { offX: 0, offY: 0, zoom: 0 };
+
             const clock = new THREE.Clock();
 
             function animateWebGL() {
@@ -2232,7 +2259,7 @@
 
                 globeGroup.rotation.x = smoothRotX;
                 globeGroup.rotation.y = (t * 0.04) + smoothRotY;
-                globeGroup.position.x = smoothPosX;
+                globeGroup.position.x = smoothPosX + camState.offX;
                 globeGroup.position.y = smoothPosY;
 
                 // Deriva de esporas
@@ -2288,7 +2315,12 @@
                     ac.line.material.opacity = 0.14 + pulse * 0.12 + scrollSmooth * 0.12;
                 }
 
-                renderer.render(scene, camera);
+                // Narrativa de cámara sobre el movimiento base
+                globeGroup.position.y += camState.offY;
+                camera.position.z = 24 + camState.zoom;
+                camera.lookAt(0, baseGlobeY, 0);
+
+                if (composer) { composer.render(); } else { renderer.render(scene, camera); }
                 requestAnimationFrame(animateWebGL);
             }
             animateWebGL();
@@ -2297,6 +2329,7 @@
                 camera.aspect = window.innerWidth / window.innerHeight;
                 camera.updateProjectionMatrix();
                 renderer.setSize(window.innerWidth, window.innerHeight);
+                if (composer) composer.setSize(window.innerWidth, window.innerHeight);
                 updateScrollTarget();
             });
 
@@ -2330,6 +2363,8 @@
                 window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
             }
 
+            const prefersReducedGlobal = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
             // --- 5. GSAP ANIMATIONS & CONTADOR DE MÉTRICAS ---
             gsap.registerPlugin(ScrollTrigger);
 
@@ -2348,21 +2383,41 @@
                 });
             });
 
+            // Contadores con proxy GSAP: incremento con curva de aceleración fluida
             document.querySelectorAll('.metric-number').forEach((metric) => {
                 const target = parseInt(metric.getAttribute('data-target'));
+                const proxy = { val: 0 };
                 ScrollTrigger.create({
                     trigger: metric,
                     start: 'top 88%',
+                    once: true,
                     onEnter: () => {
-                        let count = 0;
-                        const interval = setInterval(() => {
-                            count += Math.ceil(target / 30);
-                            if (count >= target) { count = target; clearInterval(interval); }
-                            metric.innerText = `+${count}`;
-                        }, 35);
+                        gsap.to(proxy, {
+                            val: target, duration: 2.2, ease: 'power3.out',
+                            onUpdate: () => { metric.innerText = '+' + Math.floor(proxy.val); },
+                            onComplete: () => { metric.innerText = '+' + target; }
+                        });
                     }
                 });
             });
+
+            // --- 5b. SCROLLYTELLING: la cámara 3D acompaña la lectura ---
+            if (!prefersReducedGlobal) {
+                const camTween = (trigger, vars) => gsap.to(camState, Object.assign({
+                    scrollTrigger: { trigger: trigger, start: 'top bottom', end: 'bottom top', scrub: 1.2 },
+                    ease: 'none'
+                }, vars));
+
+                // Nosotros / Misión: acercamiento al faro de Colombia
+                camTween('#about',         { zoom: -5, offX: 2.5, offY: 0.4 });
+                camTween('#mission-vision',{ zoom: -7, offX: -2.0, offY: 0.6 });
+                // Ecosistemas: el planeta cede espacio al contenido
+                camTween('#ecosystems',    { zoom: -2, offX: 4.5, offY: 0.2 });
+                // Objetivos e Impacto: alejamiento, visión global
+                camTween('#objectives',    { zoom: 3,  offX: -3.5, offY: 0 });
+                camTween('#roadmap',       { zoom: 6,  offX: 0,    offY: -0.6 });
+                camTween('#contact',       { zoom: 1,  offX: 0,    offY: 0.2 });
+            }
 
             // --- 6b. FLIP CARDS EN TÁCTIL (desktop usa hover puro vía CSS) ---
             if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
