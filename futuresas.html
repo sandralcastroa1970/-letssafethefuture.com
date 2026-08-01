@@ -383,16 +383,54 @@
             background: var(--brand-navy-card);
             border: 1px solid var(--border-glass);
             border-radius: 24px; padding: 48px;
-            backdrop-filter: blur(12px); position: relative;
-            transition: border-color 0.4s;
+            backdrop-filter: blur(12px); position: relative; overflow: hidden;
+            transition: transform 0.5s var(--ease-lux), border-color 0.4s, box-shadow 0.4s;
         }
         .about-card::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
             background: linear-gradient(90deg, transparent, var(--brand-green-bright), transparent);
         }
-        .about-card:hover { border-color: var(--border-emerald); }
+        .about-card:hover { border-color: var(--border-emerald); transform: translateY(-6px); box-shadow: 0 30px 60px rgba(0,0,0,0.55), 0 0 50px rgba(0,255,132,0.10); }
 
         .about-text { font-size: 1.15rem; line-height: 1.85; color: var(--text-muted); font-weight: 400; }
+
+        .about-icon {
+            width: 58px; height: 58px; border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(0, 255, 132, 0.1); color: var(--brand-green-bright);
+            border: 1px solid rgba(0, 255, 132, 0.3); font-size: 1.8rem;
+            margin-bottom: 24px;
+            transition: transform 0.4s var(--ease-lux), background 0.4s, color 0.4s, box-shadow 0.4s;
+        }
+        .about-card:hover .about-icon {
+            transform: scale(1.08);
+            background: var(--brand-green-bright); color: var(--brand-navy);
+            box-shadow: 0 0 26px var(--brand-green-glow);
+        }
+        .about-kicker {
+            display: block; font-family: var(--font-mono);
+            font-size: 0.72rem; letter-spacing: 0.26em; text-transform: uppercase;
+            color: var(--brand-green-bright); margin-bottom: 14px;
+        }
+        .about-pillars {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 14px;
+            margin-top: 46px;
+        }
+        .about-pill {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 12px 24px; border-radius: 30px;
+            border: 1px solid var(--border-emerald);
+            background: rgba(0, 255, 132, 0.06);
+            color: var(--text-main); font-family: var(--font-display);
+            font-weight: 600; font-size: 0.92rem;
+            transition: transform 0.4s var(--ease-lux), background 0.4s, box-shadow 0.4s;
+        }
+        .about-pill .material-symbols-rounded { font-size: 18px; color: var(--brand-green-bright); }
+        .about-pill:hover {
+            transform: translateY(-3px);
+            background: rgba(0, 255, 132, 0.14);
+            box-shadow: 0 0 24px rgba(0, 255, 132, 0.18);
+        }
 
         /* GRILLA Y DIMENSIONES PERFECTAS PARA TARJETAS 3D FLIP */
         .flip-grid {
@@ -959,15 +997,26 @@
 
         <div class="about-grid">
             <div class="about-card">
+                <div class="about-icon"><span class="material-symbols-rounded">public</span></div>
+                <span class="about-kicker">Quiénes Somos</span>
                 <p class="about-text">
                     <strong>FUTURE S.A.S.</strong> es una organización internacional de investigación, innovación y desarrollo tecnológico dedicada al avance de la Inteligencia Artificial, la Automatización Avanzada y la Biotecnología, con un firme compromiso hacia el desarrollo sostenible y la conservación ambiental.
                 </p>
             </div>
             <div class="about-card">
+                <div class="about-icon"><span class="material-symbols-rounded">hub</span></div>
+                <span class="about-kicker">Nuestra Arquitectura</span>
                 <p class="about-text">
                     Nuestra arquitectura integra tecnologías emergentes con la gestión estratégica del conocimiento, impulsando ecosistemas inteligentes, ciudades conectadas y soluciones de alto impacto global para las generaciones del mañana.
                 </p>
             </div>
+        </div>
+
+        <div class="about-pillars">
+            <span class="about-pill"><span class="material-symbols-rounded">neurology</span>Inteligencia Artificial</span>
+            <span class="about-pill"><span class="material-symbols-rounded">biotech</span>Biotecnología</span>
+            <span class="about-pill"><span class="material-symbols-rounded">precision_manufacturing</span>Automatización Avanzada</span>
+            <span class="about-pill"><span class="material-symbols-rounded">eco</span>Desarrollo Sostenible</span>
         </div>
     </section>
 
@@ -989,7 +1038,7 @@
                             <span class="flip-card-badge">Estrategia Global</span>
                             <h3 class="flip-card-front-title">MISIÓN</h3>
                             <div class="flip-hint">
-                                <span>Girar para descubrir</span>
+                                <span>Girar para conocer</span>
                                 <span class="material-symbols-rounded">sync</span>
                             </div>
                         </div>
@@ -1017,7 +1066,7 @@
                             <span class="flip-card-badge">Proyección 2040</span>
                             <h3 class="flip-card-front-title">VISIÓN</h3>
                             <div class="flip-hint">
-                                <span>Girar para descubrir</span>
+                                <span>Girar para conocer</span>
                                 <span class="material-symbols-rounded">sync</span>
                             </div>
                         </div>
@@ -1231,7 +1280,7 @@
 
             <div>
                 <h4 style="color:#fff; margin-bottom:20px; font-family:var(--font-display); font-weight:700;">Ubicación</h4>
-                <p style="color:var(--text-muted); line-height:2;">Bogotá, Territorio Ancestral<br>Lat 4.7110° N, Long 74.0721° W</p>
+                <p style="color:var(--text-muted); line-height:2;">Bucaramanga, Santander &mdash; Colombia<br>Lat 7.1193° N, Long 73.1227° W</p>
             </div>
 
             <div>
@@ -1653,7 +1702,7 @@
             gsap.from('.hero-subtitle', { opacity: 0, y: 30, duration: 1.2, ease: 'power4.out', delay: 0.4 });
             gsap.from('.hero-cta-group', { opacity: 0, y: 20, duration: 1, ease: 'power4.out', delay: 0.6 });
 
-            gsap.utils.toArray('.about-card, .flip-card, .eco-card, .obj-card, .purpose-box').forEach((el) => {
+            gsap.utils.toArray('.about-card, .about-pill, .flip-card, .eco-card, .obj-card, .purpose-box').forEach((el) => {
                 gsap.from(el, {
                     scrollTrigger: {
                         trigger: el,
