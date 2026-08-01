@@ -9,7 +9,7 @@
     <!-- FUENTES TIPOGRÁFICAS DE CLASE MUNDIAL -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <!-- MATERIAL SYMBOLS -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
@@ -760,7 +760,12 @@
         /* FOOTER OFICIAL CON LOGO GITHUB */
         .footer {
             background: #01040d; border-top: 1px solid var(--border-glass);
-            padding: 80px 60px 40px 60px; position: relative; z-index: 10;
+            padding: 70px 60px 40px 60px; position: relative; z-index: 10; overflow: hidden;
+        }
+        .footer::before {
+            content: ''; position: absolute; top: -130px; left: 50%; transform: translateX(-50%);
+            width: 760px; height: 320px; pointer-events: none;
+            background: radial-gradient(ellipse at center, rgba(0, 255, 132, 0.10), transparent 70%);
         }
         .footer-grid {
             max-width: 1440px; margin: 0 auto 60px auto;
@@ -776,8 +781,59 @@
         .footer-bottom {
             max-width: 1440px; margin: 0 auto; padding-top: 30px;
             border-top: 1px solid var(--border-glass);
-            display: flex; justify-content: space-between; color: var(--text-muted); font-size: 0.85rem;
+            display: flex; justify-content: space-between; align-items: center;
+            color: var(--text-muted); font-size: 0.85rem; gap: 20px;
         }
+        .footer-bottom .fb-mark { display: inline-flex; align-items: center; gap: 10px; }
+        .footer-bottom .fb-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--brand-green-bright); box-shadow: 0 0 12px var(--brand-green-glow); }
+
+        /* Marquesina de palabras clave */
+        .footer-marquee {
+            position: relative; overflow: hidden; max-width: 1440px; margin: 0 auto 56px auto;
+            border-top: 1px solid var(--border-glass); border-bottom: 1px solid var(--border-glass);
+            padding: 18px 0;
+            -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+        }
+        .footer-marquee-track {
+            display: flex; width: max-content; white-space: nowrap;
+            animation: marquee 28s linear infinite;
+            font-family: var(--font-display); font-weight: 700; font-size: 1.15rem;
+            color: var(--text-muted); letter-spacing: 0.03em;
+        }
+        .footer-marquee-track span { display: inline-flex; align-items: center; padding: 0 30px; }
+        .footer-marquee-track .dot { color: var(--brand-green-bright); margin: 0 30px; }
+        @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+        /* Columnas del pie */
+        .footer-col-title {
+            color: #fff; margin-bottom: 22px; font-family: var(--font-display); font-weight: 700;
+            font-size: 1rem; display: flex; align-items: center; gap: 10px;
+        }
+        .footer-col-title::before {
+            content: ''; width: 8px; height: 8px; border-radius: 2px;
+            background: var(--brand-green-bright); box-shadow: 0 0 10px var(--brand-green-glow);
+        }
+        .footer-link {
+            display: block; color: var(--text-muted); text-decoration: none;
+            padding: 5px 0; transition: color .3s var(--ease-lux), transform .3s var(--ease-lux);
+        }
+        .footer-link:hover { color: var(--brand-green-bright); transform: translateX(4px); }
+
+        /* Redes / accesos rápidos */
+        .footer-social { display: flex; gap: 14px; margin-top: 26px; }
+        .footer-social a {
+            width: 46px; height: 46px; border-radius: 13px;
+            display: flex; align-items: center; justify-content: center;
+            border: 1px solid var(--border-emerald); color: var(--brand-green-bright);
+            background: rgba(0, 255, 132, 0.06); text-decoration: none;
+            transition: all .35s var(--ease-lux);
+        }
+        .footer-social a:hover {
+            background: var(--brand-green-bright); color: var(--brand-navy);
+            transform: translateY(-4px); box-shadow: 0 0 24px var(--brand-green-glow);
+        }
+        .footer-social .material-symbols-rounded { font-size: 22px; }
 
         /* ===== MENÚ MÓVIL (hamburguesa + overlay) ===== */
         .menu-toggle {
@@ -806,12 +862,39 @@
         }
         .mobile-menu.open { opacity: 1; visibility: visible; transform: translateY(0); }
         .mobile-menu .m-link {
-            font-family: var(--font-display); font-size: 1.5rem; font-weight: 700;
-            color: var(--text-main); text-decoration: none; letter-spacing: .01em;
-            padding: 13px 24px; transition: color .3s var(--ease-lux);
+            position: relative;
+            font-family: var(--font-display);
+            font-size: 1.3rem; font-weight: 300;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.82); text-decoration: none;
+            padding: 15px 24px;
+            opacity: 0; transform: translateY(20px);
+            transition: opacity .55s var(--ease-lux), transform .55s var(--ease-lux), color .3s var(--ease-lux);
+        }
+        .mobile-menu .m-link::after {
+            content: ''; position: absolute; left: 50%; bottom: 4px;
+            width: 0; height: 1px; background: var(--brand-green-bright);
+            transform: translateX(-50%); transition: width .35s var(--ease-lux);
         }
         .mobile-menu .m-link:hover { color: var(--brand-green-bright); }
-        .mobile-menu .btn-primary { margin-top: 26px; }
+        .mobile-menu .m-link:hover::after { width: 54%; }
+
+        .mobile-menu .btn-primary {
+            margin-top: 30px;
+            opacity: 0; transform: translateY(20px);
+            transition: opacity .55s var(--ease-lux), transform .55s var(--ease-lux), box-shadow .4s var(--ease-lux);
+        }
+
+        /* Entrada escalonada al abrir el menú */
+        .mobile-menu.open .m-link,
+        .mobile-menu.open .btn-primary { opacity: 1; transform: translateY(0); }
+        .mobile-menu.open .m-link:nth-child(1) { transition-delay: .10s; }
+        .mobile-menu.open .m-link:nth-child(2) { transition-delay: .16s; }
+        .mobile-menu.open .m-link:nth-child(3) { transition-delay: .22s; }
+        .mobile-menu.open .m-link:nth-child(4) { transition-delay: .28s; }
+        .mobile-menu.open .m-link:nth-child(5) { transition-delay: .34s; }
+        .mobile-menu.open .m-link:nth-child(6) { transition-delay: .40s; }
+        .mobile-menu.open .btn-primary { transition-delay: .48s; }
         body.menu-open { overflow: hidden; }
 
         @media (max-width: 1024px) {
@@ -894,7 +977,7 @@
         /* Respeto por prefers-reduced-motion */
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
-            .hero-title, .grain-overlay { animation: none; }
+            .hero-title, .grain-overlay, .footer-marquee-track { animation: none; }
             #webgl-bg { transition: opacity 0.4s linear; }
         }
     </style>
@@ -1046,7 +1129,6 @@
                     <!-- REVERSO: TEXTO INSTITUCIONAL EXACTO -->
                     <div class="flip-card-back">
                         <h3 class="mv-title">
-                            <span class="material-symbols-rounded">rocket_launch</span>
                             MISIÓN
                         </h3>
                         <p class="mv-body">
@@ -1074,7 +1156,6 @@
                     <!-- REVERSO: TEXTO INSTITUCIONAL EXACTO -->
                     <div class="flip-card-back">
                         <h3 class="mv-title">
-                            <span class="material-symbols-rounded">visibility</span>
                             VISIÓN
                         </h3>
                         <p class="mv-body">
@@ -1263,6 +1344,13 @@
 
     <!-- FOOTER OFICIAL CON LOGO GITHUB -->
     <footer class="footer">
+        <div class="footer-marquee" aria-hidden="true">
+            <div class="footer-marquee-track">
+                <span>Inteligencia Artificial</span><span class="dot">◦</span><span>Biotecnología</span><span class="dot">◦</span><span>Energías Limpias</span><span class="dot">◦</span><span>Smart Cities</span><span class="dot">◦</span><span>Desarrollo Sostenible</span><span class="dot">◦</span>
+                <span>Inteligencia Artificial</span><span class="dot">◦</span><span>Biotecnología</span><span class="dot">◦</span><span>Energías Limpias</span><span class="dot">◦</span><span>Smart Cities</span><span class="dot">◦</span><span>Desarrollo Sostenible</span><span class="dot">◦</span>
+            </div>
+        </div>
+
         <div class="footer-grid">
             <div>
                 <a href="#" class="brand-logo-wrap" style="margin-bottom:20px; display:inline-block;">
@@ -1271,26 +1359,34 @@
                 <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.7;">
                     Organización internacional dedicada a la investigación aplicada en Inteligencia Artificial, Biotecnología y Desarrollo Sostenible.
                 </p>
+                <div class="footer-social">
+                    <a href="mailto:contacto@lsfuture.org" aria-label="Correo"><span class="material-symbols-rounded">mail</span></a>
+                    <a href="#" aria-label="Red profesional"><span class="material-symbols-rounded">hub</span></a>
+                    <a href="#" aria-label="Sitio web"><span class="material-symbols-rounded">language</span></a>
+                </div>
             </div>
 
             <div>
-                <h4 style="color:#fff; margin-bottom:20px; font-family:var(--font-display); font-weight:700;">Ecosistemas</h4>
-                <p style="color:var(--text-muted); line-height:2;">ULULATO<br>FOSADI<br>Smart Cities AI</p>
+                <h4 class="footer-col-title">Ecosistemas</h4>
+                <a class="footer-link" href="#ecosystems">ULULATO</a>
+                <a class="footer-link" href="#ecosystems">FOSADI</a>
+                <a class="footer-link" href="#ecosystems">Smart Cities AI</a>
             </div>
 
             <div>
-                <h4 style="color:#fff; margin-bottom:20px; font-family:var(--font-display); font-weight:700;">Ubicación</h4>
+                <h4 class="footer-col-title">Ubicación</h4>
                 <p style="color:var(--text-muted); line-height:2;">Bucaramanga, Santander &mdash; Colombia<br>Lat 7.1193° N, Long 73.1227° W</p>
             </div>
 
             <div>
-                <h4 style="color:#fff; margin-bottom:20px; font-family:var(--font-display); font-weight:700;">Contacto Oficial</h4>
-                <a href="mailto:contacto@lsfuture.org" style="color: var(--brand-green-bright); text-decoration:none; font-weight:600; font-family:var(--font-mono);">contacto@lsfuture.org</a>
+                <h4 class="footer-col-title">Contacto</h4>
+                <a class="footer-link" href="mailto:contacto@lsfuture.org" style="color:var(--brand-green-bright); font-family:var(--font-mono);">contacto@lsfuture.org</a>
+                <a class="footer-link" href="#contact">Unirse a la Red</a>
             </div>
         </div>
 
         <div class="footer-bottom">
-            <div>© 2026 FUTURE S.A.S. Todos los derechos reservados.</div>
+            <div class="fb-mark"><span class="fb-dot"></span> © 2026 FUTURE S.A.S. — Todos los derechos reservados.</div>
             <div>Innovación Inteligente para un Futuro Sostenible.</div>
         </div>
     </footer>
@@ -1401,7 +1497,7 @@
 
             // ---------- PLANETA DE PARTÍCULAS CON DESPLAZAMIENTO POR RUIDO ----------
             const globeRadius = 9;
-            const COUNT = prefersReduced ? 3500 : 6500;
+            const COUNT = prefersReduced ? 4000 : 8000;
             const gGeo = new THREE.BufferGeometry();
             const gPos = new Float32Array(COUNT * 3);
             const gScatter = new Float32Array(COUNT * 3);
@@ -1594,6 +1690,48 @@
             ringMesh2.rotation.y = Math.PI / 4;
             globeGroup.add(ringMesh2);
 
+            // ---------- RED NEURONAL: constelación de nodos + conexiones (IA) ----------
+            const NET_N = prefersReduced ? 80 : 150;
+            const netPos = [];
+            for (let i = 0; i < NET_N; i++) {
+                const r = 11 + Math.random() * 6;
+                const a = Math.random() * Math.PI * 2;
+                const b = Math.acos(2 * Math.random() - 1);
+                netPos.push(new THREE.Vector3(
+                    r * Math.sin(b) * Math.cos(a),
+                    r * Math.sin(b) * Math.sin(a),
+                    r * Math.cos(b)
+                ));
+            }
+            const netGroup = new THREE.Group();
+            scene.add(netGroup);
+
+            const nodePoints = new THREE.Points(
+                new THREE.BufferGeometry().setFromPoints(netPos),
+                new THREE.PointsMaterial({
+                    size: 0.5, map: glowTex, color: 0x00FF84,
+                    transparent: true, opacity: 0.7, depthWrite: false,
+                    blending: THREE.AdditiveBlending, sizeAttenuation: true
+                })
+            );
+            netGroup.add(nodePoints);
+
+            const linePts = [];
+            const NET_TH = 5.2;
+            for (let i = 0; i < NET_N; i++) {
+                for (let j = i + 1; j < NET_N; j++) {
+                    if (netPos[i].distanceTo(netPos[j]) < NET_TH) { linePts.push(netPos[i], netPos[j]); }
+                }
+            }
+            const netLines = new THREE.LineSegments(
+                new THREE.BufferGeometry().setFromPoints(linePts),
+                new THREE.LineBasicMaterial({
+                    color: 0x00FF84, transparent: true, opacity: 0.14,
+                    depthWrite: false, blending: THREE.AdditiveBlending
+                })
+            );
+            netGroup.add(netLines);
+
             // ---------- INTERACCIÓN Y SCROLL ----------
             let smoothRotX = 0, smoothRotY = 0, smoothPosX = 0, smoothPosY = 0;
             let mouseUX = 0, mouseUY = 0;      // cursor suavizado para el shader
@@ -1653,6 +1791,12 @@
                 const pulse = 0.5 + 0.5 * Math.sin(t * 1.2);
                 ringMesh1.material.opacity = 0.22 + pulse * 0.16;
                 coreGlow.material.opacity = 0.34 + pulse * 0.12 + scrollSmooth * 0.15;
+
+                // Red neuronal: late y se intensifica con el scroll
+                netGroup.rotation.y = t * 0.03 + scrollSmooth * 0.7;
+                netGroup.rotation.x = Math.sin(t * 0.05) * 0.1;
+                netLines.material.opacity = 0.10 + pulse * 0.06 + scrollSmooth * 0.14;
+                nodePoints.material.opacity = 0.55 + pulse * 0.2;
 
                 renderer.render(scene, camera);
                 requestAnimationFrame(animateWebGL);
