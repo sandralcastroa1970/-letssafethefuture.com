@@ -2018,6 +2018,41 @@
             coreGlow.scale.set(30, 30, 1);
             globeGroup.add(coreGlow);
 
+            // ---------- FARO: SEDE EN COLOMBIA (Bucaramanga) ----------
+            function latLonToVec3(latDeg, lonDeg, r) {
+                const la = latDeg * Math.PI / 180, lo = lonDeg * Math.PI / 180;
+                const hr = r * Math.cos(la);
+                return new THREE.Vector3(hr * Math.cos(lo), r * Math.sin(la), hr * Math.sin(lo));
+            }
+            const HQ = latLonToVec3(7.1193, -73.1227, globeRadius * 1.012);
+
+            const hqCore = new THREE.Sprite(new THREE.SpriteMaterial({
+                map: glowTex, color: 0xFFFFFF, transparent: true, opacity: 1,
+                depthWrite: false, blending: THREE.AdditiveBlending
+            }));
+            hqCore.position.copy(HQ);
+            hqCore.scale.set(1.5, 1.5, 1);
+            globeGroup.add(hqCore);
+
+            const hqHalo = new THREE.Sprite(new THREE.SpriteMaterial({
+                map: glowTex, color: 0x39FF48, transparent: true, opacity: 0.6,
+                depthWrite: false, blending: THREE.AdditiveBlending
+            }));
+            hqHalo.position.copy(HQ);
+            globeGroup.add(hqHalo);
+
+            // Haz de luz que se eleva desde la sede
+            const hqBeam = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.07, 0.30, 3.4, 12, 1, true),
+                new THREE.MeshBasicMaterial({
+                    color: 0x39FF48, transparent: true, opacity: 0.34,
+                    depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide
+                })
+            );
+            hqBeam.position.copy(HQ.clone().multiplyScalar(1.16));
+            hqBeam.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), HQ.clone().normalize());
+            globeGroup.add(hqBeam);
+
             // ---------- ARCOS DE CONEXIÓN GLOBAL (rutas de datos entre continentes) ----------
             const arcGroup = new THREE.Group();
             globeGroup.add(arcGroup);
@@ -2033,7 +2068,8 @@
                 );
             }
             for (let i = 0; i < ARC_N; i++) {
-                const pA = randOnSphere(globeRadius);
+                // Los primeros arcos parten de la sede en Colombia hacia el mundo
+                const pA = (i < 6) ? HQ.clone() : randOnSphere(globeRadius);
                 const pB = randOnSphere(globeRadius);
                 const mid = pA.clone().add(pB).multiplyScalar(0.5).normalize()
                               .multiplyScalar(globeRadius * (1.22 + Math.random() * 0.3));
@@ -2232,6 +2268,15 @@
                     pa[i * 3 + 2] = pz.a.z + (pz.b.z - pz.a.z) * pz.t;
                 }
                 pulseGeo.attributes.position.needsUpdate = true;
+
+                // Faro de Colombia: núcleo que late y halo que se expande
+                const beat = 0.5 + 0.5 * Math.sin(t * 2.2);
+                hqCore.material.opacity = 0.75 + beat * 0.25;
+                hqCore.scale.setScalar(1.35 + beat * 0.35);
+                const ring = (t * 0.55) % 1;
+                hqHalo.scale.setScalar(1.6 + ring * 5.2);
+                hqHalo.material.opacity = 0.55 * (1 - ring);
+                hqBeam.material.opacity = 0.20 + beat * 0.24;
 
                 // Arcos: la señal viaja de un continente a otro y se desvanece en los extremos
                 for (let i = 0; i < arcs.length; i++) {
