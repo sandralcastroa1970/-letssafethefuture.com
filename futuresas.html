@@ -107,7 +107,7 @@
             position: fixed; top: 0; left: 0; width: 100%;
             padding: 20px 60px;
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 1000;
+            z-index: 1200;
             background: rgba(2, 6, 23, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -181,6 +181,12 @@
             padding: 140px 20px 80px 20px;
             text-align: center; z-index: 10;
         }
+        /* Velo oscuro suave para que el texto se lea sobre el globo, sin ocultarlo */
+        .hero-section::before {
+            content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+            background: radial-gradient(ellipse 62% 56% at 50% 44%,
+                        rgba(2, 6, 23, 0.74), rgba(2, 6, 23, 0.38) 54%, transparent 78%);
+        }
 
         .hero-badge {
             display: inline-flex; align-items: center; gap: 10px;
@@ -188,7 +194,8 @@
             background: rgba(0, 255, 132, 0.06);
             border: 1px solid var(--border-emerald);
             color: var(--brand-green-bright);
-            font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase;
+            font-family: var(--font-mono);
+            font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
             margin-bottom: 24px; backdrop-filter: blur(10px);
             font-weight: 700;
         }
@@ -209,10 +216,11 @@
 
         .hero-subtitle {
             font-size: clamp(1.15rem, 1.9vw, 1.55rem);
-            color: var(--text-muted);
+            color: #DCE3EC;
             max-width: 860px; font-weight: 400;
             line-height: 1.7; margin-bottom: 44px;
             letter-spacing: 0.02em;
+            text-shadow: 0 2px 22px rgba(2, 6, 23, 0.9);
         }
 
         .hero-cta-group { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
@@ -319,14 +327,14 @@
 
         .purpose-desc {
             color: var(--text-muted);
-            font-size: 1.15rem; line-height: 1.85; font-weight: 400;
+            font-size: 1.08rem; line-height: 1.8; font-weight: 400;
         }
 
         .purpose-eyebrow {
             display: flex; align-items: center; justify-content: center; gap: 16px;
             margin-bottom: 30px;
-            font-family: var(--font-mono); font-size: 0.78rem;
-            letter-spacing: 0.32em; text-transform: uppercase; color: var(--brand-green-bright);
+            font-family: var(--font-mono); font-size: 0.72rem;
+            letter-spacing: 0.28em; text-transform: uppercase; color: var(--brand-green-bright);
         }
         .purpose-eyebrow::before, .purpose-eyebrow::after {
             content: ''; height: 1px; width: 60px;
@@ -368,13 +376,14 @@
 
         .section-header { margin-bottom: 70px; text-align: center; }
         .section-tag {
-            font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase;
+            font-family: var(--font-mono);
+            font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
             color: var(--brand-green-bright); margin-bottom: 12px; font-weight: 700; display: block;
         }
         .section-title {
             font-family: var(--font-display);
-            font-size: clamp(2.2rem, 4vw, 3.6rem);
-            font-weight: 800; color: var(--text-main); line-height: 1.15;
+            font-size: clamp(1.9rem, 3.2vw, 2.9rem);
+            font-weight: 700; color: var(--text-main); line-height: 1.2;
             letter-spacing: -0.01em;
         }
 
@@ -392,7 +401,7 @@
         }
         .about-card:hover { border-color: var(--border-emerald); transform: translateY(-6px); box-shadow: 0 30px 60px rgba(0,0,0,0.55), 0 0 50px rgba(0,255,132,0.10); }
 
-        .about-text { font-size: 1.15rem; line-height: 1.85; color: var(--text-muted); font-weight: 400; }
+        .about-text { font-size: 1.05rem; line-height: 1.8; color: var(--text-muted); font-weight: 400; }
 
         .about-icon {
             width: 58px; height: 58px; border-radius: 16px;
@@ -409,7 +418,7 @@
         }
         .about-kicker {
             display: block; font-family: var(--font-mono);
-            font-size: 0.72rem; letter-spacing: 0.26em; text-transform: uppercase;
+            font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
             color: var(--brand-green-bright); margin-bottom: 14px;
         }
         .about-pillars {
@@ -519,8 +528,9 @@
             background: rgba(0, 255, 132, 0.15);
             border: 1px solid var(--border-emerald);
             color: var(--brand-green-bright);
+            font-family: var(--font-mono);
             font-size: 0.72rem;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.26em;
             text-transform: uppercase;
             font-weight: 700;
             width: fit-content;
@@ -528,8 +538,8 @@
 
         .flip-card-front-title {
             font-family: var(--font-display);
-            font-size: 2.2rem;
-            font-weight: 800;
+            font-size: 2rem;
+            font-weight: 700;
             color: #FFFFFF;
             letter-spacing: -0.01em;
             text-transform: uppercase;
@@ -540,8 +550,9 @@
             align-items: center;
             gap: 8px;
             color: var(--brand-green-bright);
-            font-size: 0.8rem;
-            letter-spacing: 0.15em;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
             font-weight: 700;
             margin-top: 4px;
@@ -561,8 +572,8 @@
 
         .flip-card-back .mv-title {
             font-family: var(--font-display);
-            font-size: 1.8rem;
-            font-weight: 800;
+            font-size: 1.6rem;
+            font-weight: 700;
             color: #FFFFFF;
             margin-bottom: 16px;
             letter-spacing: -0.01em;
@@ -597,14 +608,14 @@
         .eco-card:hover { border-color: var(--brand-green-bright); box-shadow: 0 0 60px rgba(0, 255, 132, 0.2); }
 
         .eco-badge {
-            padding: 6px 16px; border-radius: 20px; font-size: 0.7rem;
-            letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700;
+            padding: 6px 16px; border-radius: 20px; font-family: var(--font-mono); font-size: 0.7rem;
+            letter-spacing: 0.26em; text-transform: uppercase; font-weight: 700;
             display: inline-block; margin-bottom: 16px;
             background: rgba(0, 255, 132, 0.12); color: var(--brand-green-bright);
             border: 1px solid var(--border-emerald);
         }
 
-        .eco-title { font-family: var(--font-display); font-size: 2.4rem; font-weight: 800; color: var(--text-main); margin-bottom: 16px; }
+        .eco-title { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--text-main); margin-bottom: 16px; }
         .eco-body { color: var(--text-muted); font-size: 1.05rem; line-height: 1.8; margin-bottom: 32px; font-weight: 400; }
 
         /* ==========================================================================
@@ -676,8 +687,8 @@
 
         .obj-title {
             font-family: var(--font-display);
-            font-size: 1.45rem;
-            font-weight: 800;
+            font-size: 1.4rem;
+            font-weight: 700;
             color: var(--text-main);
             margin-bottom: 14px;
             transform: translateZ(20px);
@@ -1332,7 +1343,7 @@
     <section id="contact">
         <div class="cta-box">
             <h2 class="section-title" style="margin-bottom: 20px;">Construyamos Juntos un Planeta Inteligente</h2>
-            <p style="color: var(--text-muted); max-width: 650px; margin: 0 auto 40px auto; font-size: 1.15rem; line-height: 1.8;">
+            <p style="color: #DCE3EC; max-width: 650px; margin: 0 auto 40px auto; font-size: 1.15rem; line-height: 1.8; text-shadow: 0 2px 18px rgba(2,6,23,0.8);">
                 Únete a la red global de organizaciones, gobiernos e investigadores que están impulsando la transición tecnológica hacia la sostenibilidad con FUTURE S.A.S.
             </p>
             <a href="mailto:contacto@lsfuture.org" class="btn-primary">
@@ -1836,6 +1847,7 @@
                     menuToggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
                 });
                 mobileMenu.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMenu));
+                mobileMenu.addEventListener('click', (e) => { if (e.target === mobileMenu) closeMenu(); });
                 window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
             }
 
