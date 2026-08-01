@@ -861,10 +861,13 @@
 
         /* CALL TO ACTION */
         .cta-box {
-            background: linear-gradient(135deg, var(--brand-navy), rgba(2, 6, 23, 0.95));
+            background: linear-gradient(135deg, rgba(1, 0, 42, 0.58), rgba(2, 6, 23, 0.66));
+            backdrop-filter: blur(22px) saturate(130%);
+            -webkit-backdrop-filter: blur(22px) saturate(130%);
             border: 1px solid var(--border-emerald);
             border-radius: 32px; padding: 84px 40px 72px 40px; text-align: center;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 90px rgba(57, 255, 72, 0.07);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55), 0 0 90px rgba(57, 255, 72, 0.07),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.07);
             position: relative; overflow: hidden;
         }
         /* Orbes institucionales (turquesa y azul cielo del manual) */
@@ -898,7 +901,9 @@
         .cta-fact {
             display: flex; align-items: flex-start; gap: 14px;
             padding: 22px 24px; border-radius: 18px;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border: 1px solid var(--border-glass);
             transition: transform .4s var(--ease-lux), border-color .4s, background .4s;
         }
@@ -1603,7 +1608,7 @@
     </section>
 
     <!-- CALL TO ACTION -->
-    <section id="contact">
+    <section id="contact" style="position: relative; z-index: 10;">
         <div class="cta-box">
             <div class="cta-pattern" aria-hidden="true"></div>
             <div class="cta-inner">
@@ -1794,11 +1799,49 @@
             // ---------- PLANETA DE PARTÍCULAS CON DESPLAZAMIENTO POR RUIDO ----------
             const globeRadius = 9;
             const COUNT = prefersReduced ? 4000 : 8000;
+            // ---------- GEOGRAFÍA REAL: contornos de continentes (lon, lat) ----------
+            // f:1 = continente · f:2 = AMÉRICA LATINA (destacada)
+            const GEO=[
+                {f:1,p:[[-168,66],[-162,71],[-140,70],[-125,70],[-110,69],[-95,72],[-82,73],[-70,67],[-62,60],[-56,52],[-64,46],[-70,43],[-74,39],[-79,33],[-81,26],[-84,30],[-90,29],[-94,29],[-97,26],[-101,29],[-107,31],[-114,32],[-118,34],[-122,38],[-124,44],[-125,49],[-131,54],[-138,59],[-148,60],[-158,57],[-165,60],[-168,66]]},
+                {f:1,p:[[-45,60],[-32,66],[-22,70],[-19,76],[-25,81],[-40,83],[-56,82],[-62,77],[-55,70],[-50,64],[-45,60]]},
+                {f:2,p:[[-118,32],[-113,31],[-107,31],[-101,29],[-97,26],[-97,21],[-95,18],[-91,18],[-88,18],[-86,21],[-88,15],[-84,14],[-82,10],[-79,9],[-77,7],[-80,6],[-83,8],[-86,11],[-89,13],[-94,15],[-99,16],[-105,19],[-109,23],[-113,27],[-117,29],[-118,32]]},
+                {f:2,p:[[-79,9],[-75,11],[-71,12],[-64,11],[-60,8],[-52,5],[-50,0],[-44,-2],[-38,-5],[-35,-9],[-39,-14],[-41,-21],[-48,-25],[-54,-34],[-58,-38],[-62,-40],[-65,-45],[-68,-51],[-72,-54],[-74,-48],[-75,-40],[-72,-30],[-70,-23],[-70,-18],[-76,-14],[-79,-8],[-81,-5],[-80,0],[-78,4],[-77,7],[-79,9]]},
+                {f:2,p:[[-85,22],[-80,23],[-75,20],[-78,20],[-82,21],[-85,22]]},
+                {f:1,p:[[-10,36],[-9,43],[-2,43],[-4,48],[0,50],[4,52],[8,54],[10,58],[14,62],[19,65],[25,66],[30,65],[30,60],[28,56],[24,50],[28,45],[35,45],[40,44],[40,38],[32,40],[26,38],[23,37],[20,40],[15,38],[17,42],[13,45],[8,44],[3,42],[-2,37],[-10,36]]},
+                {f:1,p:[[-17,14],[-17,21],[-12,28],[-6,36],[10,37],[20,32],[26,32],[33,31],[35,24],[39,15],[43,11],[51,12],[51,4],[43,-1],[40,-10],[35,-18],[33,-26],[27,-33],[20,-35],[18,-32],[14,-23],[12,-16],[9,-1],[9,4],[3,6],[-5,5],[-8,4],[-13,8],[-17,14]]},
+                {f:1,p:[[26,66],[40,68],[60,70],[80,74],[100,76],[120,73],[140,72],[160,68],[172,66],[178,64],[168,60],[158,57],[145,55],[142,50],[135,44],[128,38],[122,31],[120,25],[110,20],[105,10],[100,6],[98,10],[93,20],[88,22],[80,15],[77,8],[72,20],[68,24],[62,25],[57,26],[50,29],[45,30],[36,30],[35,36],[40,40],[48,42],[52,45],[57,50],[60,55],[50,58],[42,60],[35,63],[30,65],[26,66]]},
+                {f:1,p:[[129,32],[132,33],[136,34],[140,35],[141,38],[141,41],[145,43],[145,45],[140,45],[139,40],[137,37],[133,35],[130,34],[129,32]]},
+                {f:1,p:[[95,5],[105,0],[115,-4],[125,-3],[135,-3],[140,-6],[133,-8],[120,-9],[110,-8],[100,-2],[95,5]]},
+                {f:1,p:[[113,-22],[114,-28],[118,-35],[125,-33],[132,-32],[138,-35],[145,-38],[150,-37],[153,-30],[153,-25],[147,-19],[142,-11],[135,-12],[130,-12],[126,-14],[122,-17],[116,-20],[113,-22]]},
+                {f:1,p:[[166,-46],[171,-44],[175,-41],[178,-38],[174,-35],[172,-40],[168,-44],[166,-46]]}
+            ];
+
+            function pointInPoly(lon, lat, poly) {
+                let inside = false;
+                for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+                    const xi = poly[i][0], yi = poly[i][1];
+                    const xj = poly[j][0], yj = poly[j][1];
+                    if (((yi > lat) !== (yj > lat)) &&
+                        (lon < (xj - xi) * (lat - yi) / ((yj - yi) || 1e-12) + xi)) {
+                        inside = !inside;
+                    }
+                }
+                return inside;
+            }
+            function landAt(lon, lat) {
+                if (lat < -70) return 1;              // Antártida
+                for (let g = 0; g < GEO.length; g++) {
+                    if (pointInPoly(lon, lat, GEO[g].p)) return GEO[g].f;
+                }
+                return 0;                             // océano
+            }
+
             const gGeo = new THREE.BufferGeometry();
             const gPos = new Float32Array(COUNT * 3);
             const gScatter = new Float32Array(COUNT * 3);
             const gRand = new Float32Array(COUNT);
             const gCol = new Float32Array(COUNT * 3);
+            const gLand = new Float32Array(COUNT);
 
             const cBright = new THREE.Color(0x39FF48);
             const cMid = new THREE.Color(0x00AAB6);
@@ -1822,6 +1865,14 @@
 
                 gRand[i] = Math.random();
 
+                // Clasificar la partícula según su latitud/longitud reales
+                const nx = gPos[i * 3] / globeRadius,
+                      ny = gPos[i * 3 + 1] / globeRadius,
+                      nz = gPos[i * 3 + 2] / globeRadius;
+                const latD = Math.asin(Math.max(-1, Math.min(1, ny))) * 180 / Math.PI;
+                const lonD = Math.atan2(nz, nx) * 180 / Math.PI;
+                gLand[i] = landAt(lonD, latD);
+
                 const c = Math.random() > 0.92 ? cSpark : (Math.random() > 0.4 ? cBright : cMid);
                 gCol[i * 3] = c.r; gCol[i * 3 + 1] = c.g; gCol[i * 3 + 2] = c.b;
             }
@@ -1830,6 +1881,7 @@
             gGeo.setAttribute('aScatter', new THREE.BufferAttribute(gScatter, 3));
             gGeo.setAttribute('aRand', new THREE.BufferAttribute(gRand, 1));
             gGeo.setAttribute('aColor', new THREE.BufferAttribute(gCol, 3));
+            gGeo.setAttribute('aLand', new THREE.BufferAttribute(gLand, 1));
 
             const gUniforms = {
                 uTime:     { value: 0 },
@@ -1837,6 +1889,9 @@
                 uMouse:    { value: new THREE.Vector2(0, 0) },
                 uScroll:   { value: 0 },
                 uSize:     { value: 3.4 * PR },
+                uOcean:    { value: new THREE.Color(0x00AAB6) },
+                uLand:     { value: new THREE.Color(0x32BAEC) },
+                uLatam:    { value: new THREE.Color(0x39FF48) },
                 uOpacity:  { value: 0.95 },
                 uReduced:  { value: prefersReduced ? 1 : 0 }
             };
@@ -1895,12 +1950,16 @@
                 blending: THREE.AdditiveBlending,
                 vertexShader: NOISE_GLSL + `
                     uniform float uTime, uAssemble, uScroll, uSize, uReduced;
+                    uniform vec3 uOcean, uLand, uLatam;
                     uniform vec2 uMouse;
                     attribute vec3 aScatter;
                     attribute vec3 aColor;
                     attribute float aRand;
+                    attribute float aLand;
                     varying vec3 vColor;
                     varying float vStr;
+                    varying float vLand;
+                    varying float vLatam;
                     void main() {
                         // Ensamblaje suave desde la nube caótica hacia la esfera
                         float ease = uAssemble * uAssemble * (3.0 - 2.0 * uAssemble);
@@ -1912,15 +1971,19 @@
                         float n = snoise(sp);
                         // Desplazamiento mínimo: la SILUETA permanece redonda. El ruido
                         // ahora vive en el brillo (vStr), no en la forma.
-                        float amp = mix(0.0, 0.10, ease) * (1.0 - uReduced * 0.5);
+                        float amp = mix(0.0, 0.05, ease) * (1.0 - uReduced * 0.5);
                         vec3 pos = base + dir * (n * amp);
                         pos *= 1.0 + 0.02 * sin(uTime * 0.6); // latido uniforme (mantiene lo redondo)
 
                         vStr = n * 0.5 + 0.5;
-                        vColor = aColor;
+
+                        // Geografía real: océano · continentes · AMÉRICA LATINA destacada
+                        vLand  = step(0.5, aLand);
+                        vLatam = step(1.5, aLand);
+                        vColor = mix(uOcean, mix(uLand, uLatam, vLatam), vLand);
 
                         vec4 mv = modelViewMatrix * vec4(pos, 1.0);
-                        gl_PointSize = uSize * (0.6 + aRand * 0.8) * (0.85 + vStr * 0.5);
+                        gl_PointSize = uSize * (0.6 + aRand * 0.8) * (0.85 + vStr * 0.5) * (0.82 + vLand * 0.30 + vLatam * 0.30);
                         gl_Position = projectionMatrix * mv;
                     }
                 `,
@@ -1928,6 +1991,8 @@
                     uniform float uOpacity;
                     varying vec3 vColor;
                     varying float vStr;
+                    varying float vLand;
+                    varying float vLatam;
                     void main() {
                         vec2 uv = gl_PointCoord - 0.5;
                         float d = length(uv);
@@ -1935,7 +2000,7 @@
                         float glow = smoothstep(0.5, 0.0, d);
                         float core = smoothstep(0.26, 0.0, d);
                         vec3 col = vColor + core * 0.6;
-                        float a = (glow * 0.55 + core * 0.9) * uOpacity;
+                        float a = (glow * 0.55 + core * 0.9) * uOpacity * (0.46 + vLand * 0.40 + vLatam * 0.22);
                         gl_FragColor = vec4(col, a);
                     }
                 `
@@ -1952,6 +2017,45 @@
             const coreGlow = new THREE.Sprite(coreMat);
             coreGlow.scale.set(30, 30, 1);
             globeGroup.add(coreGlow);
+
+            // ---------- ARCOS DE CONEXIÓN GLOBAL (rutas de datos entre continentes) ----------
+            const arcGroup = new THREE.Group();
+            globeGroup.add(arcGroup);
+            const ARC_N = prefersReduced ? 6 : 16;
+            const arcs = [];
+            function randOnSphere(r) {
+                const a = Math.random() * Math.PI * 2;
+                const b = Math.acos(2 * Math.random() - 1);
+                return new THREE.Vector3(
+                    r * Math.sin(b) * Math.cos(a),
+                    r * Math.sin(b) * Math.sin(a),
+                    r * Math.cos(b)
+                );
+            }
+            for (let i = 0; i < ARC_N; i++) {
+                const pA = randOnSphere(globeRadius);
+                const pB = randOnSphere(globeRadius);
+                const mid = pA.clone().add(pB).multiplyScalar(0.5).normalize()
+                              .multiplyScalar(globeRadius * (1.22 + Math.random() * 0.3));
+                const curve = new THREE.QuadraticBezierCurve3(pA, mid, pB);
+                const line = new THREE.Line(
+                    new THREE.BufferGeometry().setFromPoints(curve.getPoints(50)),
+                    new THREE.LineBasicMaterial({
+                        color: 0x32BAEC, transparent: true, opacity: 0.22,
+                        depthWrite: false, blending: THREE.AdditiveBlending
+                    })
+                );
+                arcGroup.add(line);
+
+                const head = new THREE.Sprite(new THREE.SpriteMaterial({
+                    map: glowTex, color: 0x39FF48, transparent: true, opacity: 0.9,
+                    depthWrite: false, blending: THREE.AdditiveBlending
+                }));
+                head.scale.set(1.5, 1.5, 1);
+                arcGroup.add(head);
+
+                arcs.push({ curve, line, head, t: Math.random(), sp: 0.10 + Math.random() * 0.22 });
+            }
 
             // ---------- ESPORAS DE BIODIVERSIDAD (atmósfera ambiental) ----------
             const sporeCount = prefersReduced ? 220 : 440;
@@ -2128,6 +2232,16 @@
                     pa[i * 3 + 2] = pz.a.z + (pz.b.z - pz.a.z) * pz.t;
                 }
                 pulseGeo.attributes.position.needsUpdate = true;
+
+                // Arcos: la señal viaja de un continente a otro y se desvanece en los extremos
+                for (let i = 0; i < arcs.length; i++) {
+                    const ac = arcs[i];
+                    ac.t += ac.sp * 0.004 * (1 + scrollSmooth * 1.4);
+                    if (ac.t > 1) ac.t = 0;
+                    ac.curve.getPoint(ac.t, ac.head.position);
+                    ac.head.material.opacity = 0.95 * Math.sin(ac.t * Math.PI);
+                    ac.line.material.opacity = 0.14 + pulse * 0.12 + scrollSmooth * 0.12;
+                }
 
                 renderer.render(scene, camera);
                 requestAnimationFrame(animateWebGL);
