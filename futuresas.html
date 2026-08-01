@@ -29,7 +29,7 @@
             --brand-navy-card: rgba(5, 11, 32, 0.85);
             --brand-green-bright: #00FF84;
             --brand-green: #00E676;
-            --brand-green-glow: rgba(0, 255, 132, 0.45);
+            --brand-green-glow: rgba(0, 255, 132, 0.4);
             --text-main: #FFFFFF;
             --text-muted: #94A3B8;
             --border-glass: rgba(255, 255, 255, 0.1);
@@ -92,7 +92,7 @@
         }
 
         /* ==========================================================================
-           3. BACKGROUND THREE.JS (PLANETA VIVO & ESPORAS DE BIODIVERSIDAD)
+           3. BACKGROUND THREE.JS (PLANETA BIO-TECNOLÓGICO 3D)
            ========================================================================== */
         #webgl-bg {
             position: fixed; top: 0; left: 0;
@@ -101,14 +101,14 @@
         }
 
         /* ==========================================================================
-           4. NAVBAR CORPORATIVA (LOGO OPTIMIZADO Y VISIBLE)
+           4. NAVBAR CORPORATIVA (LOGO LIMPIO SIN RECUADRO)
            ========================================================================== */
         .navbar {
             position: fixed; top: 0; left: 0; width: 100%;
-            padding: 16px 60px;
+            padding: 20px 60px;
             display: flex; justify-content: space-between; align-items: center;
             z-index: 1000;
-            background: rgba(2, 6, 23, 0.88);
+            background: rgba(2, 6, 23, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-glass);
@@ -116,38 +116,31 @@
         }
 
         .navbar.scrolled {
-            padding: 12px 60px;
-            background: rgba(2, 6, 23, 0.96);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+            padding: 14px 60px;
+            background: rgba(2, 6, 23, 0.95);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.85);
         }
 
+        /* CONTENEDOR DEL LOGO LIMPIO Y PURISTA (SIN RECUADRO NI FONDOS) */
         .brand-logo-wrap {
             display: flex; align-items: center; gap: 16px;
             text-decoration: none;
-            background: rgba(0, 255, 132, 0.03);
-            padding: 6px 16px;
-            border-radius: 16px;
-            border: 1px solid rgba(0, 255, 132, 0.15);
-            transition: all 0.3s var(--ease-lux);
+            background: transparent !important;
+            padding: 0 !important;
+            border: none !important;
+            box-shadow: none !important;
         }
 
-        .brand-logo-wrap:hover {
-            background: rgba(0, 255, 132, 0.08);
-            border-color: var(--brand-green-bright);
-            box-shadow: 0 0 25px rgba(0, 255, 132, 0.2);
-        }
-
-        /* LOGO AUMENTADO PARA VISIBILIDAD PERFECTA */
         .brand-logo-img {
-            height: 72px; /* Incrementado para máxima nitidez */
+            height: 58px; /* Tamaño elegante y nítido */
             width: auto;
             object-fit: contain;
-            filter: drop-shadow(0 0 10px var(--brand-green-glow));
+            filter: drop-shadow(0 0 16px var(--brand-green-glow));
             transition: transform 0.4s var(--ease-lux);
         }
 
         .brand-logo-wrap:hover .brand-logo-img {
-            transform: scale(1.04);
+            transform: scale(1.05);
         }
 
         .nav-links { display: flex; gap: 32px; list-style: none; }
@@ -187,7 +180,7 @@
             min-height: 100vh; width: 100%;
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
-            padding: 150px 20px 80px 20px;
+            padding: 140px 20px 80px 20px;
             text-align: center; z-index: 10;
         }
 
@@ -209,7 +202,7 @@
             line-height: 1.1;
             letter-spacing: 0.22em;
             color: #FFFFFF;
-            text-shadow: 0 0 40px rgba(0, 255, 132, 0.35);
+            text-shadow: 0 0 50px rgba(0, 255, 132, 0.4);
             margin-bottom: 24px;
             text-transform: uppercase;
         }
@@ -366,7 +359,7 @@
 
         .flip-card {
             background-color: transparent;
-            height: 380px; /* Altura corregida para evitar desbordamientos */
+            height: 380px; /* Altura optimizada */
             perspective: 1200px;
         }
 
@@ -626,7 +619,7 @@
             position: relative; overflow: hidden;
         }
 
-        /* FOOTER OFICIAL CON LOGO GITHUB ENRIQUECIDO */
+        /* FOOTER OFICIAL CON LOGO GITHUB */
         .footer {
             background: #01040d; border-top: 1px solid var(--border-glass);
             padding: 80px 60px 40px 60px; position: relative; z-index: 10;
@@ -636,7 +629,7 @@
             display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 60px;
         }
         .footer-logo-img {
-            height: 64px;
+            height: 60px;
             width: auto;
             object-fit: contain;
             filter: drop-shadow(0 0 12px var(--brand-green-glow));
@@ -667,7 +660,7 @@
             .purpose-box { padding: 50px 24px; }
             .flip-card { height: 420px; }
             .flip-card-back { padding: 32px; }
-            .brand-logo-img { height: 52px; }
+            .brand-logo-img { height: 46px; }
         }
     </style>
 </head>
@@ -680,7 +673,7 @@
     <!-- CANVAS THREE.JS DE FONDO (PLANETA BIO-TECNOLÓGICO Y ESPORAS DE BIODIVERSIDAD) -->
     <canvas id="webgl-bg"></canvas>
 
-    <!-- NAVBAR OFICIAL CON LOGO RE-ESCALADO A 72PX DE ALTURA -->
+    <!-- NAVBAR OFICIAL (LOGO LIMPIO SIN RECUADRO) -->
     <nav class="navbar" id="navbar">
         <a href="#" class="brand-logo-wrap">
             <img src="https://raw.githubusercontent.com/sandralcastroa1970/-letssafethefuture.com/main/Recurso%202.png" alt="FUTURE S.A.S. Logo" class="brand-logo-img">
@@ -757,7 +750,7 @@
         </div>
     </section>
 
-    <!-- SECCIÓN MISIÓN Y VISIÓN (TARJETAS GIRATORIAS 3D OPTIMIZADAS) -->
+    <!-- SECCIÓN MISIÓN Y VISIÓN (TARJETAS GIRATORIAS 3D / FLIP CARDS CON IMÁGENES OFICIALES DE GITHUB) -->
     <section id="mission-vision">
         <div class="section-header">
             <span class="section-tag">Dirección Estratégica 3D</span>
@@ -1012,7 +1005,7 @@
             </div>
 
             <div>
-                <h4 style="color:#fff; margin-bottom:20px; font-family:var(--font-serif);">Ubicación</h4>
+                <h4 style="color:#fff; margin-bottom:20px; font-family:var(--font-display); font-weight:700;">Ubicación</h4>
                 <p style="color:var(--text-muted); line-height:2;">Bogotá, Territorio Ancestral<br>Lat 4.7110° N, Long 74.0721° W</p>
             </div>
 
@@ -1029,7 +1022,7 @@
     </footer>
 
     <!-- ==========================================================================
-       JAVASCRIPT: ENGINE THREE.JS (PLANETA VIVO + ESPORAS BIO-LUMINOSAS + MOUSE DAMPING)
+       JAVASCRIPT: ENGINE THREE.JS (PLANETA 3D RE-POSICIONADO + MOUSE DAMPING)
        ========================================================================== -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -1077,23 +1070,29 @@
             }
             renderCursor();
 
-            // --- 2. THREE.JS 3D PLANETA VIVO CON ATMÓSFERA Y ESPORAS DE BIODIVERSIDAD ---
+            // --- 2. THREE.JS 3D PLANETA RE-POSICIONADO PARA MARCAR ENCAADRE PERFECTO ---
             const canvas = document.getElementById('webgl-bg');
             const scene = new THREE.Scene();
+            
+            // Cámara ajustada en Z=24 para darle espacio óptimo al texto
             const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 22;
+            camera.position.set(0, 0, 24);
 
             const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-            // Grupo Contenedor Principal
+            // Grupo Contenedor
             const globeGroup = new THREE.Group();
             scene.add(globeGroup);
 
-            // A. Esfera de Partículas Bio-Ecológicas
+            // Posicionamiento Y base para bajar el planeta y evitar colisión con el título
+            const baseGlobeY = -1.8;
+            globeGroup.position.y = baseGlobeY;
+
+            // Esfera de Partículas Bio-Ecológicas
             const globeRadius = 9;
-            const particleCount = 3200;
+            const particleCount = 3000;
             const globeGeo = new THREE.BufferGeometry();
             const positions = new Float32Array(particleCount * 3);
             const colors = new Float32Array(particleCount * 3);
@@ -1113,7 +1112,7 @@
                 positions[i * 3 + 1] = y;
                 positions[i * 3 + 2] = z;
 
-                const color = Math.random() > 0.3 ? colorGreenBright : colorGreenMid;
+                const color = Math.random() > 0.35 ? colorGreenBright : colorGreenMid;
                 colors[i * 3] = color.r;
                 colors[i * 3 + 1] = color.g;
                 colors[i * 3 + 2] = color.b;
@@ -1132,8 +1131,8 @@
             const globePoints = new THREE.Points(globeGeo, globeMat);
             globeGroup.add(globePoints);
 
-            // B. ESPORAS DE BIODIVERSIDAD FLOTANTE (ATMÓSFERA VIVA)
-            const sporeCount = 350;
+            // ESPORAS DE BIODIVERSIDAD FLOTANTES (ATMÓSFERA AMBIENTAL)
+            const sporeCount = 320;
             const sporeGeo = new THREE.BufferGeometry();
             const sporePos = new Float32Array(sporeCount * 3);
 
@@ -1145,25 +1144,25 @@
 
             sporeGeo.setAttribute('position', new THREE.BufferAttribute(sporePos, 3));
             const sporeMat = new THREE.PointsMaterial({
-                size: 0.2, color: 0x00FF84, transparent: true, opacity: 0.4, blending: THREE.AdditiveBlending
+                size: 0.18, color: 0x00FF84, transparent: true, opacity: 0.35, blending: THREE.AdditiveBlending
             });
             const sporePoints = new THREE.Points(sporeGeo, sporeMat);
-            scene.add(sporePoints); // Flotan independientemente en la escena
+            scene.add(sporePoints);
 
-            // C. Anillos Orbitantes de Energía Bio-Neón
+            // Anillos Orbitantes de Energía Verde Bio-Neón
             const ringGeo1 = new THREE.TorusGeometry(12, 0.035, 16, 120);
-            const ringMat1 = new THREE.MeshBasicMaterial({ color: 0x00FF84, transparent: true, opacity: 0.35 });
+            const ringMat1 = new THREE.MeshBasicMaterial({ color: 0x00FF84, transparent: true, opacity: 0.32 });
             const ringMesh1 = new THREE.Mesh(ringGeo1, ringMat1);
             ringMesh1.rotation.x = Math.PI / 3;
             globeGroup.add(ringMesh1);
 
             const ringGeo2 = new THREE.TorusGeometry(14, 0.025, 16, 120);
-            const ringMat2 = new THREE.MeshBasicMaterial({ color: 0x00E676, transparent: true, opacity: 0.25 });
+            const ringMat2 = new THREE.MeshBasicMaterial({ color: 0x00E676, transparent: true, opacity: 0.22 });
             const ringMesh2 = new THREE.Mesh(ringGeo2, ringMat2);
             ringMesh2.rotation.y = Math.PI / 4;
             globeGroup.add(ringMesh2);
 
-            // VARIABLES DE INTERACCIÓN CERO-GRAVEDAD (ULTRA-SUAVE)
+            // VARIABLES DE INTERACCIÓN CERO-GRAVEDAD (SMOOTH DAMPING)
             let smoothRotX = 0;
             let smoothRotY = 0;
             let smoothPosX = 0;
@@ -1174,33 +1173,32 @@
             function animateWebGL() {
                 const elapsedTime = clock.getElapsedTime();
 
-                // Amplitud sutil de rotación y traslación
-                const targetRotX = mouseY * 0.22; 
-                const targetRotY = mouseX * 0.35;
+                // Amplitud suave calibrada
+                const targetRotX = mouseY * 0.2; 
+                const targetRotY = mouseX * 0.32;
 
-                const targetPosX = mouseX * 0.6;  
-                const targetPosY = -mouseY * 0.4;
+                const targetPosX = mouseX * 0.5;  
+                const targetPosY = baseGlobeY - (mouseY * 0.35); // Re-posicionado manteniendo base Y baja
 
-                // Interpolación suave (Bajo factor Lerp 0.018)
+                // Interpolación fluida
                 smoothRotX += (targetRotX - smoothRotX) * 0.02;
                 smoothRotY += (targetRotY - smoothRotY) * 0.02;
 
                 smoothPosX += (targetPosX - smoothPosX) * 0.015;
                 smoothPosY += (targetPosY - smoothPosY) * 0.015;
 
-                // Giro continúo base + inclinación al cursor
                 globeGroup.rotation.x = smoothRotX;
                 globeGroup.rotation.y = (elapsedTime * 0.04) + smoothRotY;
 
                 globeGroup.position.x = smoothPosX;
                 globeGroup.position.y = smoothPosY;
 
-                // Deriva de Esporas de Biodiversidad
-                sporePoints.rotation.y = elapsedTime * 0.015;
-                sporePoints.rotation.x = Math.sin(elapsedTime * 0.02) * 0.1;
+                // Deriva de Esporas
+                sporePoints.rotation.y = elapsedTime * 0.012;
+                sporePoints.rotation.x = Math.sin(elapsedTime * 0.02) * 0.08;
 
-                ringMesh1.rotation.z = elapsedTime * 0.06;
-                ringMesh2.rotation.z = -elapsedTime * 0.04;
+                ringMesh1.rotation.z = elapsedTime * 0.05;
+                ringMesh2.rotation.z = -elapsedTime * 0.035;
 
                 renderer.render(scene, camera);
                 requestAnimationFrame(animateWebGL);
