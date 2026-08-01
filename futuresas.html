@@ -6,10 +6,10 @@
     <title>FUTURE S.A.S. | Innovación Inteligente para un Futuro Sostenible</title>
     <meta name="description" content="FUTURE S.A.S. - Organización internacional líder en Inteligencia Artificial, Biotecnología, Energías Limpias y Desarrollo Sostenible Global.">
 
-    <!-- FUENTES CORPORATIVAS OFICIALES -->
+    <!-- FUENTES TIPOGRÁFICAS DE CLASE MUNDIAL (SILICON VALLEY STANDARD) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <!-- MATERIAL SYMBOLS -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
@@ -26,17 +26,16 @@
         :root {
             --bg-dark: #020617;
             --brand-navy: #050B20;
-            --brand-navy-card: rgba(5, 11, 32, 0.75);
+            --brand-navy-card: rgba(5, 11, 32, 0.85);
             --brand-green-bright: #00FF84;
             --brand-green: #00E676;
             --brand-green-glow: rgba(0, 255, 132, 0.45);
-            --brand-green-dark: #003818;
             --text-main: #FFFFFF;
             --text-muted: #94A3B8;
-            --border-glass: rgba(255, 255, 255, 0.08);
+            --border-glass: rgba(255, 255, 255, 0.1);
             --border-emerald: rgba(0, 255, 132, 0.35);
-            --font-serif: 'Cinzel', serif;
-            --font-sans: 'Space Grotesk', sans-serif;
+            --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             --font-mono: 'Space Mono', monospace;
             --ease-lux: cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -51,10 +50,11 @@
         html, body {
             background-color: var(--bg-dark);
             color: var(--text-main);
-            font-family: var(--font-sans);
+            font-family: var(--font-body);
             overflow-x: hidden;
             width: 100%;
             scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
         }
 
         /* Scrollbar Personalizado */
@@ -92,7 +92,7 @@
         }
 
         /* ==========================================================================
-           3. BACKGROUND THREE.JS (PLANETA BIO-TECNOLÓGICO 3D)
+           3. BACKGROUND THREE.JS (PLANETA VIVO & ESPORAS DE BIODIVERSIDAD)
            ========================================================================== */
         #webgl-bg {
             position: fixed; top: 0; left: 0;
@@ -101,14 +101,14 @@
         }
 
         /* ==========================================================================
-           4. NAVBAR CORPORATIVA
+           4. NAVBAR CORPORATIVA (LOGO OPTIMIZADO Y VISIBLE)
            ========================================================================== */
         .navbar {
             position: fixed; top: 0; left: 0; width: 100%;
-            padding: 18px 60px;
+            padding: 16px 60px;
             display: flex; justify-content: space-between; align-items: center;
             z-index: 1000;
-            background: rgba(2, 6, 23, 0.85);
+            background: rgba(2, 6, 23, 0.88);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-glass);
@@ -117,39 +117,44 @@
 
         .navbar.scrolled {
             padding: 12px 60px;
-            background: rgba(2, 6, 23, 0.95);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.85);
+            background: rgba(2, 6, 23, 0.96);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
         }
 
         .brand-logo-wrap {
             display: flex; align-items: center; gap: 16px;
             text-decoration: none;
+            background: rgba(0, 255, 132, 0.03);
+            padding: 6px 16px;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 255, 132, 0.15);
+            transition: all 0.3s var(--ease-lux);
         }
 
-        .brand-svg-icon {
-            width: 44px; height: 44px;
-            filter: drop-shadow(0 0 12px var(--brand-green-glow));
-            transition: transform 0.5s var(--ease-lux);
+        .brand-logo-wrap:hover {
+            background: rgba(0, 255, 132, 0.08);
+            border-color: var(--brand-green-bright);
+            box-shadow: 0 0 25px rgba(0, 255, 132, 0.2);
         }
 
-        .brand-logo-wrap:hover .brand-svg-icon {
-            transform: rotate(90deg) scale(1.1);
+        /* LOGO AUMENTADO PARA VISIBILIDAD PERFECTA */
+        .brand-logo-img {
+            height: 72px; /* Incrementado para máxima nitidez */
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px var(--brand-green-glow));
+            transition: transform 0.4s var(--ease-lux);
         }
 
-        .brand-title-text {
-            font-family: var(--font-mono);
-            font-size: 1.15rem;
-            font-weight: 700;
-            letter-spacing: 0.35em;
-            color: var(--brand-green-bright);
-            text-transform: uppercase;
+        .brand-logo-wrap:hover .brand-logo-img {
+            transform: scale(1.04);
         }
 
         .nav-links { display: flex; gap: 32px; list-style: none; }
         .nav-link {
             text-decoration: none; color: var(--text-muted);
             font-size: 0.85rem; letter-spacing: 0.12em;
-            text-transform: uppercase; font-weight: 500;
+            text-transform: uppercase; font-weight: 600;
             transition: color 0.3s;
         }
         .nav-link:hover { color: var(--brand-green-bright); }
@@ -159,9 +164,9 @@
             border: 1px solid var(--border-emerald);
             background: rgba(0, 255, 132, 0.08);
             color: var(--brand-green-bright);
-            font-family: var(--font-sans);
+            font-family: var(--font-display);
             font-size: 0.8rem; letter-spacing: 0.15em;
-            text-transform: uppercase; font-weight: 600;
+            text-transform: uppercase; font-weight: 700;
             text-decoration: none;
             transition: all 0.4s var(--ease-lux);
             box-shadow: 0 0 15px rgba(0, 255, 132, 0.15);
@@ -175,14 +180,14 @@
         }
 
         /* ==========================================================================
-           5. HERO SECTION
+           5. HERO SECTION CINEMATOGRÁFICA
            ========================================================================== */
         .hero-section {
             position: relative;
             min-height: 100vh; width: 100%;
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
-            padding: 140px 20px 80px 20px;
+            padding: 150px 20px 80px 20px;
             text-align: center; z-index: 10;
         }
 
@@ -194,6 +199,7 @@
             color: var(--brand-green-bright);
             font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase;
             margin-bottom: 24px; backdrop-filter: blur(10px);
+            font-weight: 700;
         }
 
         .hero-title {
@@ -201,7 +207,7 @@
             font-size: clamp(2.8rem, 6.5vw, 5.8rem);
             font-weight: 700;
             line-height: 1.1;
-            letter-spacing: 0.25em;
+            letter-spacing: 0.22em;
             color: #FFFFFF;
             text-shadow: 0 0 40px rgba(0, 255, 132, 0.35);
             margin-bottom: 24px;
@@ -213,9 +219,9 @@
         .hero-subtitle {
             font-size: clamp(1.15rem, 1.9vw, 1.55rem);
             color: var(--text-muted);
-            max-width: 860px; font-weight: 300;
+            max-width: 860px; font-weight: 400;
             line-height: 1.7; margin-bottom: 44px;
-            letter-spacing: 0.03em;
+            letter-spacing: 0.02em;
         }
 
         .hero-cta-group { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
@@ -223,8 +229,8 @@
         .btn-primary {
             padding: 18px 42px; border-radius: 40px;
             background: linear-gradient(135deg, var(--brand-green-bright), var(--brand-green));
-            color: var(--brand-navy); font-family: var(--font-sans);
-            font-weight: 700; font-size: 0.88rem;
+            color: var(--brand-navy); font-family: var(--font-display);
+            font-weight: 800; font-size: 0.88rem;
             letter-spacing: 0.15em; text-transform: uppercase;
             text-decoration: none;
             transition: all 0.4s var(--ease-lux);
@@ -242,8 +248,8 @@
             padding: 18px 42px; border-radius: 40px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-glass);
-            color: var(--text-main); font-family: var(--font-sans);
-            font-weight: 600; font-size: 0.88rem;
+            color: var(--text-main); font-family: var(--font-display);
+            font-weight: 700; font-size: 0.88rem;
             letter-spacing: 0.15em; text-transform: uppercase;
             text-decoration: none;
             transition: all 0.4s var(--ease-lux);
@@ -263,7 +269,7 @@
             display: flex; flex-direction: column; align-items: center; gap: 8px;
             color: var(--text-muted); font-size: 0.7rem;
             letter-spacing: 0.25em; text-transform: uppercase;
-            animation: bounce 2s infinite;
+            animation: bounce 2s infinite; font-weight: 600;
         }
 
         @keyframes bounce {
@@ -295,23 +301,24 @@
         .purpose-content { max-width: 900px; margin: 0 auto; text-align: center; }
 
         .purpose-quote {
-            font-family: var(--font-serif);
-            font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 3vw, 2.6rem);
+            font-weight: 700;
             line-height: 1.35; color: var(--text-main);
-            margin-bottom: 30px; font-style: italic;
+            margin-bottom: 30px; letter-spacing: -0.01em;
         }
 
         .purpose-quote span {
-            color: var(--brand-green-bright); font-style: normal;
+            color: var(--brand-green-bright);
         }
 
         .purpose-desc {
             color: var(--text-muted);
-            font-size: 1.15rem; line-height: 1.85; font-weight: 300;
+            font-size: 1.15rem; line-height: 1.85; font-weight: 400;
         }
 
         /* ==========================================================================
-           7. SECCIONES INSTITUCIONALES (NOSOTROS, MISIÓN, VISIÓN)
+           7. TARJETAS GIRATORIAS 3D OPTIMIZADAS (FLIP CARDS - MISIÓN Y VISIÓN)
            ========================================================================== */
         section {
             position: relative;
@@ -322,12 +329,13 @@
         .section-header { margin-bottom: 70px; text-align: center; }
         .section-tag {
             font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase;
-            color: var(--brand-green-bright); margin-bottom: 12px; font-weight: 600; display: block;
+            color: var(--brand-green-bright); margin-bottom: 12px; font-weight: 700; display: block;
         }
         .section-title {
-            font-family: var(--font-serif);
-            font-size: clamp(2.2rem, 4vw, 3.8rem);
-            font-weight: 700; color: var(--text-main); line-height: 1.15;
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 4vw, 3.6rem);
+            font-weight: 800; color: var(--text-main); line-height: 1.15;
+            letter-spacing: -0.01em;
         }
 
         .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
@@ -344,27 +352,155 @@
         }
         .about-card:hover { border-color: var(--border-emerald); }
 
-        .about-text { font-size: 1.15rem; line-height: 1.85; color: var(--text-muted); font-weight: 300; }
+        .about-text { font-size: 1.15rem; line-height: 1.85; color: var(--text-muted); font-weight: 400; }
 
-        /* MISIÓN Y VISIÓN CON TEXTOS EXACTOS */
-        .mission-vision-container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        .mv-card {
-            background: var(--brand-navy-card);
+        /* GRILLA Y DIMENSIONES PERFECTAS PARA TARJETAS 3D FLIP */
+        .flip-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 1240px;
+            margin: 0 auto;
+            perspective: 1200px;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            height: 380px; /* Altura corregida para evitar desbordamientos */
+            perspective: 1200px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: left;
+            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-style: preserve-3d;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+        }
+
+        .flip-card:hover .flip-card-inner,
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 24px;
+            overflow: hidden;
             border: 1px solid var(--border-glass);
-            border-radius: 28px; padding: 50px;
-            backdrop-filter: blur(14px);
-            transition: all 0.4s var(--ease-lux);
-            position: relative; overflow: hidden;
-        }
-        .mv-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--border-emerald);
-            box-shadow: 0 20px 50px rgba(0, 255, 132, 0.15);
         }
 
-        .mv-icon { font-size: 3rem; color: var(--brand-green-bright); margin-bottom: 24px; }
-        .mv-title { font-family: var(--font-serif); font-size: 2rem; color: var(--text-main); margin-bottom: 20px; }
-        .mv-body { color: var(--text-muted); line-height: 1.8; font-size: 1.05rem; font-weight: 300; }
+        /* FRENTE DE LA TARJETA */
+        .flip-card-front {
+            background: var(--brand-navy-card);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .flip-card-img {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7) contrast(1.1);
+            transition: transform 0.8s var(--ease-lux);
+        }
+
+        .flip-card:hover .flip-card-img {
+            transform: scale(1.08);
+        }
+
+        .flip-card-front-overlay {
+            position: relative;
+            z-index: 2;
+            padding: 32px;
+            background: linear-gradient(180deg, rgba(2, 6, 23, 0) 0%, rgba(2, 6, 23, 0.95) 100%);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .flip-card-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 20px;
+            background: rgba(0, 255, 132, 0.15);
+            border: 1px solid var(--border-emerald);
+            color: var(--brand-green-bright);
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: 700;
+            width: fit-content;
+        }
+
+        .flip-card-front-title {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            letter-spacing: -0.01em;
+            text-transform: uppercase;
+        }
+
+        .flip-hint {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--brand-green-bright);
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        /* REVERSO DE LA TARJETA (TEXTO INSTITUCIONAL EXACTO) */
+        .flip-card-back {
+            background: linear-gradient(160deg, #07102b, #020617);
+            border-color: var(--border-emerald);
+            color: #FFFFFF;
+            transform: rotateY(180deg);
+            padding: 36px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: inset 0 0 35px rgba(0, 255, 132, 0.12);
+        }
+
+        .flip-card-back .mv-title {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            margin-bottom: 16px;
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .flip-card-back .mv-title span {
+            color: var(--brand-green-bright);
+        }
+
+        .flip-card-back .mv-body {
+            color: #CBD5E1;
+            line-height: 1.75;
+            font-size: 0.98rem;
+            font-weight: 400;
+        }
 
         /* ==========================================================================
            8. ECOSISTEMAS TECNOLÓGICOS (ULULATO & FOSADI)
@@ -388,8 +524,8 @@
             border: 1px solid var(--border-emerald);
         }
 
-        .eco-title { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 700; color: var(--text-main); margin-bottom: 16px; }
-        .eco-body { color: var(--text-muted); font-size: 1.05rem; line-height: 1.8; margin-bottom: 32px; font-weight: 300; }
+        .eco-title { font-family: var(--font-display); font-size: 2.4rem; font-weight: 800; color: var(--text-main); margin-bottom: 16px; }
+        .eco-body { color: var(--text-muted); font-size: 1.05rem; line-height: 1.8; margin-bottom: 32px; font-weight: 400; }
 
         /* ==========================================================================
            9. OBJETIVOS ESTRATÉGICOS Y ÁREAS DE INVESTIGACIÓN
@@ -410,7 +546,7 @@
         }
 
         .obj-number {
-            font-family: var(--font-serif); font-size: 3rem; font-weight: 900;
+            font-family: var(--font-display); font-size: 3rem; font-weight: 900;
             color: rgba(255, 255, 255, 0.06); position: absolute; top: 20px; right: 24px;
         }
         .obj-icon {
@@ -420,7 +556,7 @@
             font-size: 1.8rem; margin-bottom: 24px;
             border: 1px solid rgba(0, 255, 132, 0.25);
         }
-        .obj-title { font-family: var(--font-serif); font-size: 1.35rem; color: var(--text-main); margin-bottom: 12px; }
+        .obj-title { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px; }
         .obj-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
 
         /* HEX GRID INVESTIGACIÓN */
@@ -451,11 +587,11 @@
             text-align: center;
         }
         .metric-number {
-            font-family: var(--font-serif); font-size: clamp(3rem, 5vw, 4.5rem);
+            font-family: var(--font-display); font-size: clamp(3rem, 5vw, 4.5rem);
             font-weight: 900; color: var(--brand-green-bright);
             text-shadow: 0 0 30px var(--brand-green-glow); line-height: 1; margin-bottom: 10px;
         }
-        .metric-label { font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
+        .metric-label { font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; }
 
         /* ROADMAP */
         .timeline { position: relative; max-width: 1000px; margin: 0 auto; padding: 40px 0; }
@@ -478,7 +614,7 @@
             background: var(--brand-navy-card); border: 1px solid var(--border-glass);
             border-radius: 16px; padding: 28px; backdrop-filter: blur(10px);
         }
-        .timeline-year { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: var(--brand-green-bright); margin-bottom: 8px; }
+        .timeline-year { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; color: var(--brand-green-bright); margin-bottom: 8px; }
         .timeline-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
 
         /* CALL TO ACTION */
@@ -490,7 +626,7 @@
             position: relative; overflow: hidden;
         }
 
-        /* FOOTER */
+        /* FOOTER OFICIAL CON LOGO GITHUB ENRIQUECIDO */
         .footer {
             background: #01040d; border-top: 1px solid var(--border-glass);
             padding: 80px 60px 40px 60px; position: relative; z-index: 10;
@@ -498,6 +634,13 @@
         .footer-grid {
             max-width: 1440px; margin: 0 auto 60px auto;
             display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 60px;
+        }
+        .footer-logo-img {
+            height: 64px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 0 12px var(--brand-green-glow));
+            margin-bottom: 20px;
         }
         .footer-bottom {
             max-width: 1440px; margin: 0 auto; padding-top: 30px;
@@ -508,7 +651,7 @@
         @media (max-width: 1024px) {
             .navbar { padding: 20px 30px; }
             section { padding: 80px 30px; }
-            .about-grid, .ecosystems-wrapper, .mission-vision-container { grid-template-columns: 1fr; }
+            .about-grid, .ecosystems-wrapper, .flip-grid { grid-template-columns: 1fr; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
             .timeline::before { left: 20px; }
             .timeline-item { width: 100%; padding-left: 50px; text-align: left !important; }
@@ -522,6 +665,9 @@
             .footer-grid { grid-template-columns: 1fr; }
             .footer-bottom { flex-direction: column; gap: 15px; text-align: center; }
             .purpose-box { padding: 50px 24px; }
+            .flip-card { height: 420px; }
+            .flip-card-back { padding: 32px; }
+            .brand-logo-img { height: 52px; }
         }
     </style>
 </head>
@@ -531,36 +677,18 @@
     <div class="cursor-dot"></div>
     <div class="cursor-circle"></div>
 
-    <!-- CANVAS THREE.JS DE FONDO (PLANETA BIO-TECNOLÓGICO CON FÍSICA Y AMORTIGUACIÓN SEDA 3D) -->
+    <!-- CANVAS THREE.JS DE FONDO (PLANETA BIO-TECNOLÓGICO Y ESPORAS DE BIODIVERSIDAD) -->
     <canvas id="webgl-bg"></canvas>
 
-    <!-- NAVBAR OFICIAL -->
+    <!-- NAVBAR OFICIAL CON LOGO RE-ESCALADO A 72PX DE ALTURA -->
     <nav class="navbar" id="navbar">
         <a href="#" class="brand-logo-wrap">
-            <svg class="brand-svg-icon" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <linearGradient id="gradLogoGreen" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#00FF84" />
-                        <stop offset="100%" stop-color="#00C853" />
-                    </linearGradient>
-                </defs>
-                <path d="M100 22 C118 22 140 36 140 58 C140 76 122 86 104 86 C98 86 90 83 85 78 C80 72 80 64 84 50 C88 36 94 22 100 22 Z" fill="url(#gradLogoGreen)" />
-                <path d="M178 100 C178 118 164 140 142 140 C124 140 114 122 114 104 C114 98 117 90 122 85 C128 80 136 80 150 84 C164 88 178 94 178 100 Z" fill="url(#gradLogoGreen)" />
-                <path d="M100 178 C82 178 60 164 60 142 C60 124 78 114 96 114 C102 114 110 117 115 122 C120 128 120 136 116 150 C112 164 106 178 100 178 Z" fill="url(#gradLogoGreen)" />
-                <path d="M22 100 C22 82 36 60 58 60 C76 60 86 78 86 96 C86 102 83 110 78 115 C72 120 64 120 50 116 C36 112 22 106 22 100 Z" fill="url(#gradLogoGreen)" />
-                <path d="M96 68 C80 80 75 92 75 96 C85 96 96 82 96 68 Z" fill="url(#gradLogoGreen)"/>
-                <path d="M132 96 C120 80 108 75 104 75 C104 85 118 96 132 96 Z" fill="url(#gradLogoGreen)"/>
-                <path d="M104 132 C120 120 125 108 125 104 C115 104 104 118 104 132 Z" fill="url(#gradLogoGreen)"/>
-                <path d="M68 104 C80 120 92 125 96 125 C96 115 82 104 68 104 Z" fill="url(#gradLogoGreen)"/>
-            </svg>
-            <div>
-                <span class="brand-title-text">FUTURE S.A.S.</span>
-            </div>
+            <img src="https://raw.githubusercontent.com/sandralcastroa1970/-letssafethefuture.com/main/Recurso%202.png" alt="FUTURE S.A.S. Logo" class="brand-logo-img">
         </a>
 
         <ul class="nav-links">
             <li><a href="#about" class="nav-link">Nosotros</a></li>
-            <li><a href="#mission" class="nav-link">Misión y Visión</a></li>
+            <li><a href="#mission-vision" class="nav-link">Misión y Visión</a></li>
             <li><a href="#ecosystems" class="nav-link">Ecosistemas</a></li>
             <li><a href="#objectives" class="nav-link">Objetivos</a></li>
             <li><a href="#research" class="nav-link">Investigación</a></li>
@@ -585,7 +713,7 @@
                 Conocer Ecosistemas
                 <span class="material-symbols-rounded">arrow_forward</span>
             </a>
-            <a href="#mission" class="btn-secondary">Misión y Visión</a>
+            <a href="#mission-vision" class="btn-secondary">Misión y Visión 3D</a>
         </div>
 
         <div class="scroll-indicator">
@@ -629,33 +757,73 @@
         </div>
     </section>
 
-    <!-- SECCIÓN MISIÓN Y VISIÓN (TEXTOS INSTITUCIONALES EXACTOS) -->
-    <section id="mission">
+    <!-- SECCIÓN MISIÓN Y VISIÓN (TARJETAS GIRATORIAS 3D OPTIMIZADAS) -->
+    <section id="mission-vision">
         <div class="section-header">
-            <span class="section-tag">Dirección Estratégica</span>
+            <span class="section-tag">Dirección Estratégica 3D</span>
             <h2 class="section-title">Misión & Visión</h2>
         </div>
 
-        <div class="mission-vision-container">
-            <div class="mv-card">
-                <span class="material-symbols-rounded mv-icon">rocket_launch</span>
-                <h3 class="mv-title">Misión</h3>
-                <p class="mv-body">
-                    Impulsar el desarrollo de tecnologías vanguardistas como la Inteligencia Artificial, Robótica, Big Data y Biotecnología para resolver los desafíos globales más complejos, promoviendo la sostenibilidad ecológica, la eficiencia gubernamental digital y el progreso integral de la sociedad.
-                </p>
+        <div class="flip-grid">
+            <!-- TARJETA 3D GIRATORIA: MISIÓN -->
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <!-- FRENTE: FOTO OFICIAL GITHUB + TÍTULO -->
+                    <div class="flip-card-front">
+                        <img src="https://raw.githubusercontent.com/sandralcastroa1970/-letssafethefuture.com/main/mision.jpg" alt="Misión FUTURE S.A.S." class="flip-card-img">
+                        <div class="flip-card-front-overlay">
+                            <span class="flip-card-badge">Estrategia Global</span>
+                            <h3 class="flip-card-front-title">MISIÓN</h3>
+                            <div class="flip-hint">
+                                <span>Girar para descubrir</span>
+                                <span class="material-symbols-rounded">sync</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- REVERSO: TEXTO INSTITUCIONAL EXACTO -->
+                    <div class="flip-card-back">
+                        <h3 class="mv-title">
+                            <span class="material-symbols-rounded">rocket_launch</span>
+                            MISIÓN
+                        </h3>
+                        <p class="mv-body">
+                            Impulsar el desarrollo de tecnologías vanguardistas como la Inteligencia Artificial, Robótica, Big Data y Biotecnología para resolver los desafíos globales más complejos, promoviendo la sostenibilidad ecológica, la eficiencia gubernamental digital y el progreso integral de la sociedad.
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            <div class="mv-card">
-                <span class="material-symbols-rounded mv-icon">visibility</span>
-                <h3 class="mv-title">Visión</h3>
-                <p class="mv-body">
-                    Posicionarnos para el año 2040 como el ecosistema de innovación tecnológica y desarrollo sostenible de mayor prestigio a nivel internacional, liderando la transición hacia un planeta inteligente, interconectado y ambientalmente equilibrado.
-                </p>
+            <!-- TARJETA 3D GIRATORIA: VISIÓN -->
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <!-- FRENTE: FOTO OFICIAL GITHUB + TÍTULO -->
+                    <div class="flip-card-front">
+                        <img src="https://raw.githubusercontent.com/sandralcastroa1970/-letssafethefuture.com/main/vision.jpg" alt="Visión FUTURE S.A.S." class="flip-card-img">
+                        <div class="flip-card-front-overlay">
+                            <span class="flip-card-badge">Proyección 2040</span>
+                            <h3 class="flip-card-front-title">VISIÓN</h3>
+                            <div class="flip-hint">
+                                <span>Girar para descubrir</span>
+                                <span class="material-symbols-rounded">sync</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- REVERSO: TEXTO INSTITUCIONAL EXACTO -->
+                    <div class="flip-card-back">
+                        <h3 class="mv-title">
+                            <span class="material-symbols-rounded">visibility</span>
+                            VISIÓN
+                        </h3>
+                        <p class="mv-body">
+                            Posicionarnos para el año 2040 como el ecosistema de innovación tecnológica y desarrollo sostenible de mayor prestigio a nivel internacional, liderando la transición hacia un planeta inteligente, interconectado y ambientalmente equilibrado.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- SECCIÓN ECOSISTEMAS TECNOLÓGICOS (ULULATO & FOSADI CON TEXTOS EXACTOS) -->
+    <!-- SECCIÓN ECOSISTEMAS TECNOLÓGICOS (ULULATO & FOSADI) -->
     <section id="ecosystems">
         <div class="section-header">
             <span class="section-tag">Plataformas e Impacto</span>
@@ -826,20 +994,12 @@
         </div>
     </section>
 
-    <!-- FOOTER OFICIAL -->
+    <!-- FOOTER OFICIAL CON LOGO GITHUB -->
     <footer class="footer">
         <div class="footer-grid">
             <div>
-                <a href="#" class="brand-logo-wrap" style="margin-bottom:20px;">
-                    <svg class="brand-svg-icon" viewBox="0 0 200 200" fill="none">
-                        <path d="M100 22 C118 22 140 36 140 58 C140 76 122 86 104 86 C98 86 90 83 85 78 C80 72 80 64 84 50 C88 36 94 22 100 22 Z" fill="#00FF84" />
-                        <path d="M178 100 C178 118 164 140 142 140 C124 140 114 122 114 104 C114 98 117 90 122 85 C128 80 136 80 150 84 C164 88 178 94 178 100 Z" fill="#00FF84" />
-                        <path d="M100 178 C82 178 60 164 60 142 C60 124 78 114 96 114 C102 114 110 117 115 122 C120 128 120 136 116 150 C112 164 106 178 100 178 Z" fill="#00FF84" />
-                        <path d="M22 100 C22 82 36 60 58 60 C76 60 86 78 86 96 C86 102 83 110 78 115 C72 120 64 120 50 116 C36 112 22 106 22 100 Z" fill="#00FF84" />
-                    </svg>
-                    <div>
-                        <span class="brand-title-text">FUTURE S.A.S.</span>
-                    </div>
+                <a href="#" class="brand-logo-wrap" style="margin-bottom:20px; display:inline-block;">
+                    <img src="https://raw.githubusercontent.com/sandralcastroa1970/-letssafethefuture.com/main/Recurso%204-8.png" alt="FUTURE S.A.S. Footer Logo" class="footer-logo-img">
                 </a>
                 <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.7;">
                     Organización internacional dedicada a la investigación aplicada en Inteligencia Artificial, Biotecnología y Desarrollo Sostenible.
@@ -847,7 +1007,7 @@
             </div>
 
             <div>
-                <h4 style="color:#fff; margin-bottom:20px; font-family:var(--font-serif);">Ecosistemas</h4>
+                <h4 style="color:#fff; margin-bottom:20px; font-family:var(--font-display); font-weight:700;">Ecosistemas</h4>
                 <p style="color:var(--text-muted); line-height:2;">ULULATO<br>FOSADI<br>Smart Cities AI</p>
             </div>
 
@@ -857,7 +1017,7 @@
             </div>
 
             <div>
-                <h4 style="color:#fff; margin-bottom:20px; font-family:var(--font-serif);">Contacto Oficial</h4>
+                <h4 style="color:#fff; margin-bottom:20px; font-family:var(--font-display); font-weight:700;">Contacto Oficial</h4>
                 <a href="mailto:contacto@lsfuture.org" style="color: var(--brand-green-bright); text-decoration:none; font-weight:600; font-family:var(--font-mono);">contacto@lsfuture.org</a>
             </div>
         </div>
@@ -869,7 +1029,7 @@
     </footer>
 
     <!-- ==========================================================================
-       JAVASCRIPT: ENGINE THREE.JS (FÍSICA 3D CINEMÁTICA CON DAMPING ULTRA-SUAVE)
+       JAVASCRIPT: ENGINE THREE.JS (PLANETA VIVO + ESPORAS BIO-LUMINOSAS + MOUSE DAMPING)
        ========================================================================== -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -878,7 +1038,7 @@
             const dot = document.querySelector('.cursor-dot');
             const circle = document.querySelector('.cursor-circle');
             
-            let mouseX = 0; // Coordenadas centradas normalizadas (-1 a +1)
+            let mouseX = 0; // Coordenadas normalizadas centradas (-1 a +1)
             let mouseY = 0;
             let pageX = window.innerWidth / 2;
             let pageY = window.innerHeight / 2;
@@ -888,14 +1048,13 @@
                 pageX = e.clientX;
                 pageY = e.clientY;
 
-                // Coordenadas normalizadas (-1 a +1)
                 mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
                 mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
 
                 dot.style.left = `${pageX}px`;
                 dot.style.top = `${pageY}px`;
 
-                const hoverable = e.target.closest('a, button, .about-card, .mv-card, .eco-card, .obj-card, .hex-item');
+                const hoverable = e.target.closest('a, button, .about-card, .flip-card, .eco-card, .obj-card, .hex-item');
                 if (hoverable) {
                     circle.style.width = '60px';
                     circle.style.height = '60px';
@@ -918,7 +1077,7 @@
             }
             renderCursor();
 
-            // --- 2. THREE.JS 3D PLANETA CON AMORTIGUACIÓN Y LERP ULTRA-SUAVE ---
+            // --- 2. THREE.JS 3D PLANETA VIVO CON ATMÓSFERA Y ESPORAS DE BIODIVERSIDAD ---
             const canvas = document.getElementById('webgl-bg');
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -928,18 +1087,17 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-            // Grupo Contenedor del Planeta
+            // Grupo Contenedor Principal
             const globeGroup = new THREE.Group();
             scene.add(globeGroup);
 
-            // Esfera de Partículas Bio-Ecológicas
+            // A. Esfera de Partículas Bio-Ecológicas
             const globeRadius = 9;
-            const particleCount = 2800;
+            const particleCount = 3200;
             const globeGeo = new THREE.BufferGeometry();
             const positions = new Float32Array(particleCount * 3);
             const colors = new Float32Array(particleCount * 3);
 
-            // Colores estrictos corporativos
             const colorGreenBright = new THREE.Color(0x00FF84);
             const colorGreenMid = new THREE.Color(0x00E676);
 
@@ -955,7 +1113,7 @@
                 positions[i * 3 + 1] = y;
                 positions[i * 3 + 2] = z;
 
-                const color = Math.random() > 0.35 ? colorGreenBright : colorGreenMid;
+                const color = Math.random() > 0.3 ? colorGreenBright : colorGreenMid;
                 colors[i * 3] = color.r;
                 colors[i * 3 + 1] = color.g;
                 colors[i * 3 + 2] = color.b;
@@ -965,7 +1123,7 @@
             globeGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
             const globeMat = new THREE.PointsMaterial({
-                size: 0.15,
+                size: 0.14,
                 vertexColors: true,
                 transparent: true, opacity: 0.85,
                 blending: THREE.AdditiveBlending
@@ -974,7 +1132,25 @@
             const globePoints = new THREE.Points(globeGeo, globeMat);
             globeGroup.add(globePoints);
 
-            // Anillos Orbitantes de Energía Verde Bio-Neón
+            // B. ESPORAS DE BIODIVERSIDAD FLOTANTE (ATMÓSFERA VIVA)
+            const sporeCount = 350;
+            const sporeGeo = new THREE.BufferGeometry();
+            const sporePos = new Float32Array(sporeCount * 3);
+
+            for (let i = 0; i < sporeCount * 3; i += 3) {
+                sporePos[i] = (Math.random() - 0.5) * 55;
+                sporePos[i + 1] = (Math.random() - 0.5) * 55;
+                sporePos[i + 2] = (Math.random() - 0.5) * 55;
+            }
+
+            sporeGeo.setAttribute('position', new THREE.BufferAttribute(sporePos, 3));
+            const sporeMat = new THREE.PointsMaterial({
+                size: 0.2, color: 0x00FF84, transparent: true, opacity: 0.4, blending: THREE.AdditiveBlending
+            });
+            const sporePoints = new THREE.Points(sporeGeo, sporeMat);
+            scene.add(sporePoints); // Flotan independientemente en la escena
+
+            // C. Anillos Orbitantes de Energía Bio-Neón
             const ringGeo1 = new THREE.TorusGeometry(12, 0.035, 16, 120);
             const ringMat1 = new THREE.MeshBasicMaterial({ color: 0x00FF84, transparent: true, opacity: 0.35 });
             const ringMesh1 = new THREE.Mesh(ringGeo1, ringMat1);
@@ -987,7 +1163,7 @@
             ringMesh2.rotation.y = Math.PI / 4;
             globeGroup.add(ringMesh2);
 
-            // VARIABLES DE INTERACCIÓN CON AMORTIGUACIÓN CINEMÁTICA (SULFA-SUAVE)
+            // VARIABLES DE INTERACCIÓN CERO-GRAVEDAD (ULTRA-SUAVE)
             let smoothRotX = 0;
             let smoothRotY = 0;
             let smoothPosX = 0;
@@ -998,28 +1174,31 @@
             function animateWebGL() {
                 const elapsedTime = clock.getElapsedTime();
 
-                // 1. Amplitud Sutil de Rotación y Traslación (Valores bajos = movimiento fluido sin brusquedad)
+                // Amplitud sutil de rotación y traslación
                 const targetRotX = mouseY * 0.22; 
                 const targetRotY = mouseX * 0.35;
 
                 const targetPosX = mouseX * 0.6;  
                 const targetPosY = -mouseY * 0.4;
 
-                // 2. Interpolación ultra-suave (Bajo factor Lerp 0.018 para inercia sedosa)
+                // Interpolación suave (Bajo factor Lerp 0.018)
                 smoothRotX += (targetRotX - smoothRotX) * 0.02;
                 smoothRotY += (targetRotY - smoothRotY) * 0.02;
 
                 smoothPosX += (targetPosX - smoothPosX) * 0.015;
                 smoothPosY += (targetPosY - smoothPosY) * 0.015;
 
-                // 3. Aplicación al planeta (Giro continuo base + Inclinación suave del cursor)
+                // Giro continúo base + inclinación al cursor
                 globeGroup.rotation.x = smoothRotX;
                 globeGroup.rotation.y = (elapsedTime * 0.04) + smoothRotY;
 
                 globeGroup.position.x = smoothPosX;
                 globeGroup.position.y = smoothPosY;
 
-                // Animación de los anillos orbitantes
+                // Deriva de Esporas de Biodiversidad
+                sporePoints.rotation.y = elapsedTime * 0.015;
+                sporePoints.rotation.x = Math.sin(elapsedTime * 0.02) * 0.1;
+
                 ringMesh1.rotation.z = elapsedTime * 0.06;
                 ringMesh2.rotation.z = -elapsedTime * 0.04;
 
@@ -1048,7 +1227,7 @@
             gsap.from('.hero-subtitle', { opacity: 0, y: 30, duration: 1.2, ease: 'power4.out', delay: 0.4 });
             gsap.from('.hero-cta-group', { opacity: 0, y: 20, duration: 1, ease: 'power4.out', delay: 0.6 });
 
-            gsap.utils.toArray('.about-card, .mv-card, .eco-card, .obj-card, .purpose-box').forEach((el) => {
+            gsap.utils.toArray('.about-card, .flip-card, .eco-card, .obj-card, .purpose-box').forEach((el) => {
                 gsap.from(el, {
                     scrollTrigger: {
                         trigger: el,
