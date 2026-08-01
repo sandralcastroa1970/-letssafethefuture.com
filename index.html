@@ -194,8 +194,8 @@
         /* Velo oscuro suave para que el texto se lea sobre el globo, sin ocultarlo */
         .hero-section::before {
             content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-            background: radial-gradient(ellipse 62% 56% at 50% 44%,
-                        rgba(2, 6, 23, 0.74), rgba(2, 6, 23, 0.38) 54%, transparent 78%);
+            background: radial-gradient(ellipse 58% 48% at 50% 46%,
+                        rgba(2, 6, 23, 0.46), rgba(2, 6, 23, 0.20) 56%, transparent 78%);
         }
 
         .hero-badge {
@@ -1786,7 +1786,7 @@
             // Grupo contenedor del planeta
             const globeGroup = new THREE.Group();
             scene.add(globeGroup);
-            const baseGlobeY = -1.2;
+            const baseGlobeY = -0.6;
             globeGroup.position.y = baseGlobeY;
 
             // Sprite radial suave reutilizable (halos, esporas, núcleo)
@@ -1805,8 +1805,8 @@
             const glowTex = makeGlowTexture();
 
             // ---------- PLANETA DE PARTÍCULAS CON DESPLAZAMIENTO POR RUIDO ----------
-            const globeRadius = 9;
-            const COUNT = prefersReduced ? 4000 : 8000;
+            const globeRadius = 10.5;
+            const COUNT = prefersReduced ? 4500 : 11000;
             // ---------- GEOGRAFÍA REAL: contornos de continentes (lon, lat) ----------
             // f:1 = continente · f:2 = AMÉRICA LATINA (destacada)
             const GEO=[
@@ -2368,6 +2368,7 @@
             // --- 5. GSAP ANIMATIONS & CONTADOR DE MÉTRICAS ---
             gsap.registerPlugin(ScrollTrigger);
 
+            gsap.from('.hero-badge', { opacity: 0, y: 20, duration: 1, ease: 'power4.out', delay: 0.1 });
             gsap.from('.hero-title', { opacity: 0, y: 50, duration: 1.2, ease: 'power4.out', delay: 0.2 });
             gsap.from('.hero-subtitle', { opacity: 0, y: 30, duration: 1.2, ease: 'power4.out', delay: 0.4 });
             gsap.from('.hero-cta-group', { opacity: 0, y: 20, duration: 1, ease: 'power4.out', delay: 0.6 });
@@ -2402,11 +2403,15 @@
             });
 
             // El fondo 3D se atenúa fuera del hero para no competir con la lectura
-            gsap.to('#webgl-bg', {
-                opacity: 0.34,
-                ease: 'none',
-                scrollTrigger: { trigger: '#about', start: 'top 75%', end: 'top 25%', scrub: 1 }
-            });
+            gsap.fromTo('#webgl-bg',
+                { opacity: 1 },
+                {
+                    opacity: 0.34,
+                    ease: 'none',
+                    immediateRender: false,
+                    scrollTrigger: { trigger: '#about', start: 'top 75%', end: 'top 25%', scrub: 1 }
+                }
+            );
 
             // --- 5b. SCROLLYTELLING: la cámara 3D acompaña la lectura ---
             if (!prefersReducedGlobal) {
