@@ -285,11 +285,25 @@
             border-radius: 36px;
             padding: 80px 60px;
             position: relative; overflow: hidden;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85), 0 0 70px rgba(0, 255, 132, 0.06), inset 0 0 45px rgba(0, 255, 132, 0.04);
             backdrop-filter: blur(20px);
         }
+        /* Resplandor neón en una esquina */
+        .purpose-box::before {
+            content: ''; position: absolute; top: -40%; right: -12%;
+            width: 60%; height: 130%; pointer-events: none;
+            background: radial-gradient(circle, rgba(0, 255, 132, 0.14), transparent 70%);
+        }
+        /* Trama de puntos bio-tech, difuminada hacia los bordes */
+        .purpose-box::after {
+            content: ''; position: absolute; inset: 0; pointer-events: none;
+            background-image: radial-gradient(rgba(0, 255, 132, 0.06) 1px, transparent 1px);
+            background-size: 26px 26px;
+            -webkit-mask-image: radial-gradient(ellipse at center, #000 28%, transparent 74%);
+            mask-image: radial-gradient(ellipse at center, #000 28%, transparent 74%);
+        }
 
-        .purpose-content { max-width: 900px; margin: 0 auto; text-align: center; }
+        .purpose-content { max-width: 900px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
 
         .purpose-quote {
             font-family: var(--font-display);
@@ -307,6 +321,41 @@
             color: var(--text-muted);
             font-size: 1.15rem; line-height: 1.85; font-weight: 400;
         }
+
+        .purpose-eyebrow {
+            display: flex; align-items: center; justify-content: center; gap: 16px;
+            margin-bottom: 30px;
+            font-family: var(--font-mono); font-size: 0.78rem;
+            letter-spacing: 0.32em; text-transform: uppercase; color: var(--brand-green-bright);
+        }
+        .purpose-eyebrow::before, .purpose-eyebrow::after {
+            content: ''; height: 1px; width: 60px;
+            background: linear-gradient(90deg, transparent, var(--border-emerald));
+        }
+        .purpose-eyebrow::after { background: linear-gradient(90deg, var(--border-emerald), transparent); }
+        .purpose-eyebrow .material-symbols-rounded { font-size: 18px; }
+
+        .purpose-mark {
+            display: block; font-family: var(--font-display);
+            font-size: 6rem; line-height: 0.4; margin-bottom: 6px;
+            color: rgba(0, 255, 132, 0.18); user-select: none;
+        }
+        .purpose-divider {
+            width: 120px; height: 2px; margin: 34px auto;
+            background: linear-gradient(90deg, transparent, var(--brand-green-bright), transparent);
+            background-size: 200% 100%;
+            animation: dividerFlow 3.5s linear infinite;
+        }
+        @keyframes dividerFlow {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .purpose-attr {
+            margin-top: 30px; font-family: var(--font-mono);
+            font-size: 0.82rem; letter-spacing: 0.18em; text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        .purpose-attr span { color: var(--brand-green-bright); }
 
         /* ==========================================================================
            7. TARJETAS GIRATORIAS 3D (FLIP CARDS - MISIÓN Y VISIÓN)
@@ -692,6 +741,41 @@
             display: flex; justify-content: space-between; color: var(--text-muted); font-size: 0.85rem;
         }
 
+        /* ===== MENÚ MÓVIL (hamburguesa + overlay) ===== */
+        .menu-toggle {
+            display: none;
+            width: 46px; height: 46px;
+            flex-direction: column; justify-content: center; align-items: center; gap: 6px;
+            background: transparent; border: none; padding: 0;
+            z-index: 1100; cursor: pointer;
+        }
+        .menu-toggle span {
+            display: block; width: 26px; height: 2px; border-radius: 2px;
+            background: var(--brand-green-bright);
+            transition: transform .35s var(--ease-lux), opacity .25s var(--ease-lux);
+        }
+        .menu-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .menu-toggle.open span:nth-child(2) { opacity: 0; }
+        .menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        .mobile-menu {
+            position: fixed; inset: 0; z-index: 1050;
+            background: rgba(2, 6, 23, 0.97);
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px;
+            opacity: 0; visibility: hidden; transform: translateY(-14px);
+            transition: opacity .4s var(--ease-lux), transform .4s var(--ease-lux), visibility .4s;
+        }
+        .mobile-menu.open { opacity: 1; visibility: visible; transform: translateY(0); }
+        .mobile-menu .m-link {
+            font-family: var(--font-display); font-size: 1.5rem; font-weight: 700;
+            color: var(--text-main); text-decoration: none; letter-spacing: .01em;
+            padding: 13px 24px; transition: color .3s var(--ease-lux);
+        }
+        .mobile-menu .m-link:hover { color: var(--brand-green-bright); }
+        .mobile-menu .btn-primary { margin-top: 26px; }
+        body.menu-open { overflow: hidden; }
+
         @media (max-width: 1024px) {
             .navbar { padding: 20px 30px; }
             section { padding: 80px 30px; }
@@ -705,6 +789,7 @@
 
         @media (max-width: 768px) {
             .nav-links, .btn-header { display: none; }
+            .menu-toggle { display: flex; }
             .hero-title { font-size: 2.5rem; letter-spacing: 0.15em; }
             .footer-grid { grid-template-columns: 1fr; }
             .footer-bottom { flex-direction: column; gap: 15px; text-align: center; }
@@ -712,6 +797,17 @@
             .flip-card { height: 420px; }
             .flip-card-back { padding: 32px; }
             .brand-logo-img { height: 58px; }
+        }
+
+        @media (max-width: 480px) {
+            .navbar { padding: 14px 18px; }
+            section { padding: 64px 20px; }
+            .purpose-section { padding: 64px 18px; }
+            .hero-cta-group { width: 100%; }
+            .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+            .purpose-mark { font-size: 4rem; }
+            .purpose-eyebrow { font-size: 0.66rem; letter-spacing: 0.22em; }
+            .purpose-eyebrow::before, .purpose-eyebrow::after { width: 26px; }
         }
 
         /* ==========================================================================
@@ -792,7 +888,22 @@
         </ul>
 
         <a href="#contact" class="btn-header">Unirse a la Red</a>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
     </nav>
+
+    <!-- MENÚ MÓVIL -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#about" class="m-link">Nosotros</a>
+        <a href="#mission-vision" class="m-link">Misión y Visión</a>
+        <a href="#ecosystems" class="m-link">Ecosistemas</a>
+        <a href="#objectives" class="m-link">Objetivos</a>
+        <a href="#research" class="m-link">Investigación</a>
+        <a href="#impact" class="m-link">Impacto Global</a>
+        <a href="#contact" class="btn-primary">Unirse a la Red</a>
+    </div>
 
     <!-- HERO SECTION -->
     <section class="hero-section" id="hero">
@@ -822,12 +933,19 @@
     <div class="purpose-section">
         <div class="purpose-box">
             <div class="purpose-content">
+                <div class="purpose-eyebrow">
+                    <span class="material-symbols-rounded">eco</span>
+                    Manifiesto FUTURE
+                </div>
+                <span class="purpose-mark" aria-hidden="true">“</span>
                 <blockquote class="purpose-quote">
-                    "La tecnología del futuro no busca dominar la Tierra, sino <span>sincronizarse con su latido</span> para garantizar la permanencia de la vida."
+                    La tecnología del futuro no busca dominar la Tierra, sino <span>sincronizarse con su latido</span> para garantizar la permanencia de la vida.
                 </blockquote>
+                <div class="purpose-divider" aria-hidden="true"></div>
                 <p class="purpose-desc">
                     En <strong>FUTURE S.A.S.</strong> concebimos la Inteligencia Artificial, la Biotecnología y la Analítica de Datos como instrumentos al servicio del equilibrio bio-ambiental. Desarrollamos soluciones tecnológicas que protegen la biodiversidad, dignifican las culturas y aseguran la regeneración de los ecosistemas globales.
                 </p>
+                <div class="purpose-attr">&mdash; FUTURE <span>S.A.S.</span></div>
             </div>
         </div>
     </div>
@@ -1505,6 +1623,28 @@
                 if (window.scrollY > 50) { navbar.classList.add('scrolled'); }
                 else { navbar.classList.remove('scrolled'); }
             });
+
+            // --- MENÚ MÓVIL ---
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (menuToggle && mobileMenu) {
+                const closeMenu = () => {
+                    menuToggle.classList.remove('open');
+                    mobileMenu.classList.remove('open');
+                    document.body.classList.remove('menu-open');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    menuToggle.setAttribute('aria-label', 'Abrir menú');
+                };
+                menuToggle.addEventListener('click', () => {
+                    const open = mobileMenu.classList.toggle('open');
+                    menuToggle.classList.toggle('open', open);
+                    document.body.classList.toggle('menu-open', open);
+                    menuToggle.setAttribute('aria-expanded', String(open));
+                    menuToggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+                });
+                mobileMenu.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMenu));
+                window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+            }
 
             // --- 5. GSAP ANIMATIONS & CONTADOR DE MÉTRICAS ---
             gsap.registerPlugin(ScrollTrigger);
