@@ -35,7 +35,7 @@
             --text-main: #FFFFFF;
             --text-muted: #94A3B8;
             --border-glass: rgba(255, 255, 255, 0.1);
-            --border-emerald: rgba(57, 255, 72, 0.35);
+            --border-emerald: rgba(50, 186, 236, 0.34);
             --font-display: 'Sora', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
             --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             --font-mono: 'Space Mono', monospace;
@@ -336,7 +336,7 @@
             display: flex; align-items: center; justify-content: center; gap: 16px;
             margin-bottom: 30px;
             font-family: var(--font-mono); font-size: 0.72rem;
-            letter-spacing: 0.28em; text-transform: uppercase; color: var(--brand-green-bright);
+            letter-spacing: 0.28em; text-transform: uppercase; color: var(--brand-teal);
         }
         .purpose-eyebrow::before, .purpose-eyebrow::after {
             content: ''; height: 1px; width: 60px;
@@ -352,7 +352,7 @@
         }
         .purpose-divider {
             width: 120px; height: 2px; margin: 34px auto;
-            background: linear-gradient(90deg, transparent, var(--brand-green-bright), transparent);
+            background: linear-gradient(90deg, transparent, var(--brand-teal), transparent);
             background-size: 200% 100%;
             animation: dividerFlow 3.5s linear infinite;
         }
@@ -380,7 +380,7 @@
         .section-tag {
             font-family: var(--font-mono);
             font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
-            color: var(--brand-green-bright); margin-bottom: 12px; font-weight: 700; display: block;
+            color: var(--brand-sky); margin-bottom: 12px; font-weight: 700; display: block;
         }
         .section-title {
             font-family: var(--font-display);
@@ -399,7 +399,7 @@
         }
         .about-card::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--brand-green-bright), transparent);
+            background: linear-gradient(90deg, transparent, var(--brand-teal), transparent);
         }
         .about-card:hover { border-color: var(--border-emerald); transform: translateY(-6px); box-shadow: 0 30px 60px rgba(0,0,0,0.55), 0 0 50px rgba(57, 255, 72,0.10); }
 
@@ -408,8 +408,8 @@
         .about-icon {
             width: 58px; height: 58px; border-radius: 16px;
             display: flex; align-items: center; justify-content: center;
-            background: rgba(57, 255, 72, 0.1); color: var(--brand-green-bright);
-            border: 1px solid rgba(57, 255, 72, 0.3); font-size: 1.8rem;
+            background: rgba(50, 186, 236, 0.1); color: var(--brand-sky);
+            border: 1px solid rgba(50, 186, 236, 0.3); font-size: 1.8rem;
             margin-bottom: 24px;
             transition: transform 0.4s var(--ease-lux), background 0.4s, color 0.4s, box-shadow 0.4s;
         }
@@ -421,7 +421,7 @@
         .about-kicker {
             display: block; font-family: var(--font-mono);
             font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
-            color: var(--brand-green-bright); margin-bottom: 14px;
+            color: var(--brand-sky); margin-bottom: 14px;
         }
         .about-pillars {
             display: flex; flex-wrap: wrap; justify-content: center; gap: 14px;
@@ -436,7 +436,7 @@
             font-weight: 600; font-size: 0.92rem;
             transition: transform 0.4s var(--ease-lux), background 0.4s, box-shadow 0.4s;
         }
-        .about-pill .material-symbols-rounded { font-size: 18px; color: var(--brand-green-bright); }
+        .about-pill .material-symbols-rounded { font-size: 18px; color: var(--brand-teal); }
         .about-pill:hover {
             transform: translateY(-3px);
             background: rgba(57, 255, 72, 0.14);
@@ -815,7 +815,7 @@
         }
         .tl3d-card::before {
             content: ''; position: absolute; top: 0; left: 24px; right: 24px; height: 2px; border-radius: 2px;
-            background: linear-gradient(90deg, transparent, var(--brand-green-bright), transparent);
+            background: linear-gradient(90deg, transparent, var(--brand-teal), transparent);
             opacity: .55; transition: opacity .45s;
         }
         .tl3d-item:hover .tl3d-card {
@@ -976,7 +976,7 @@
             color: var(--text-muted); letter-spacing: 0.03em;
         }
         .footer-marquee-track span { display: inline-flex; align-items: center; padding: 0 30px; }
-        .footer-marquee-track .dot { color: var(--brand-green-bright); margin: 0 30px; }
+        .footer-marquee-track .dot { color: var(--brand-teal); margin: 0 30px; }
         @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
         /* Columnas del pie */
