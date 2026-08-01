@@ -19,9 +19,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-    <!-- SMOOTH SCROLL (LENIS) -->
-    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-
     <!-- Respaldo de marca si el logo no carga (entornos sin red) -->
     <script>
         function brandFallback(img){
@@ -89,6 +86,7 @@
         }
 
         /* Scrollbar Personalizado */
+        html { scroll-padding-top: 90px; }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-dark); }
         ::-webkit-scrollbar-thumb {
@@ -2546,32 +2544,8 @@
             // --- 5. GSAP ANIMATIONS & CONTADOR DE MÉTRICAS ---
             gsap.registerPlugin(ScrollTrigger);
 
-            // --- SCROLL SUAVE (LENIS) + SINCRONÍA CON SCROLLTRIGGER ---
+            // --- Detección de movimiento reducido (para la intro del hero) ---
             const __reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            let __lenis = null;
-            if (window.Lenis && !__reduceMotion) {
-                __lenis = new Lenis({
-                    duration: 1.15,
-                    easing: (x) => Math.min(1, 1.001 - Math.pow(2, -10 * x)),
-                    smoothWheel: true, wheelMultiplier: 1.0, touchMultiplier: 1.6
-                });
-                __lenis.on('scroll', ScrollTrigger.update);
-                gsap.ticker.add((time) => { __lenis.raf(time * 1000); });
-                gsap.ticker.lagSmoothing(0);
-                window.__lenis = __lenis;
-
-                // Enlaces internos: desplazamiento suave con offset de navbar
-                document.querySelectorAll('a[href^="#"]').forEach((a) => {
-                    a.addEventListener('click', (e) => {
-                        const id = a.getAttribute('href');
-                        if (!id || id === '#') return;
-                        const target = document.querySelector(id);
-                        if (!target) return;
-                        e.preventDefault();
-                        __lenis.scrollTo(target, { offset: -80, duration: 1.2 });
-                    });
-                });
-            }
 
             // --- INTRO KINÉTICA DEL HERO (se dispara al terminar el preloader) ---
             let __heroIntro = null;
@@ -2781,13 +2755,13 @@
 
                 gsap.set('#preloader .pl-logo-svg', { scale: 0.94, transformOrigin: '50% 50%' });
                 gsap.set('#preloader .pl-draw', { strokeDashoffset: 1, fillOpacity: 0, strokeOpacity: 1 });
-                gsap.timeline({ onComplete: function(){ gsap.delayedCall(0.45, finish); } })
-                    .to('#preloader .pl-logo-svg', { scale: 1, duration: 1.9, ease: 'power2.out' }, 0)
-                    .to('#preloader .pl-draw', { strokeDashoffset: 0, duration: 1.7, ease: 'power2.inOut', stagger: 0.15 }, 0)
-                    .to('#preloader .pl-draw', { fillOpacity: 1, duration: 0.75, ease: 'power2.out', stagger: 0.06 }, '-=0.45')
-                    .to('#preloader .pl-draw', { strokeOpacity: 0, duration: 0.7, ease: 'power2.out' }, '<')
-                    .to('#preloader .pl-logo-svg', { filter: 'drop-shadow(0 0 46px rgba(57,255,72,0.6))', duration: 0.6, ease: 'power2.out' }, '<');
-                setTimeout(function(){ if (document.getElementById('preloader') && !finish.done) finish(); }, 7500);
+                gsap.timeline({ onComplete: function(){ gsap.delayedCall(0.3, finish); } })
+                    .to('#preloader .pl-logo-svg', { scale: 1, duration: 1.5, ease: 'power2.out' }, 0)
+                    .to('#preloader .pl-draw', { strokeDashoffset: 0, duration: 1.35, ease: 'power2.inOut', stagger: 0.12 }, 0)
+                    .to('#preloader .pl-draw', { fillOpacity: 1, duration: 0.6, ease: 'power2.out', stagger: 0.05 }, '-=0.4')
+                    .to('#preloader .pl-draw', { strokeOpacity: 0, duration: 0.6, ease: 'power2.out' }, '<')
+                    .to('#preloader .pl-logo-svg', { filter: 'drop-shadow(0 0 46px rgba(57,255,72,0.6))', duration: 0.5, ease: 'power2.out' }, '<');
+                setTimeout(function(){ if (document.getElementById('preloader') && !finish.done) finish(); }, 6500);
             })();
         });
     </script>
