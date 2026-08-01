@@ -380,15 +380,15 @@
            ========================================================================== */
         section {
             position: relative;
-            padding: 120px 60px;
+            padding: 190px 60px;
             max-width: 1440px; margin: 0 auto; z-index: 10;
         }
 
-        .section-header { margin-bottom: 70px; text-align: center; }
+        .section-header { margin-bottom: 100px; text-align: center; }
         .section-tag {
             font-family: var(--font-mono);
             font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
-            color: var(--brand-sky); margin-bottom: 12px; font-weight: 700; display: block;
+            color: var(--brand-sky); margin-bottom: 26px; font-weight: 700; display: block;
         }
         .section-title {
             font-family: var(--font-display);
@@ -1126,7 +1126,7 @@
 
         @media (max-width: 480px) {
             .navbar { padding: 14px 18px; }
-            section { padding: 64px 20px; }
+            section { padding: 110px 20px; }
             .purpose-section { padding: 64px 18px; }
             .hero-cta-group { width: 100%; }
             .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
@@ -1197,10 +1197,10 @@
             --font-mono: 'Space Mono', monospace;
             /* Escala Tipográfica Fluida (Responsive Pro) */
             --fs-hero: clamp(2.8rem, 6.2vw, 5.6rem);
-            --fs-h2: clamp(2.0rem, 3.5vw, 3.2rem);
+            --fs-h2: clamp(2.4rem, 5vw, 4.4rem);
             --fs-h3: clamp(1.35rem, 2.2vw, 1.85rem);
             --fs-body: clamp(0.98rem, 1.1vw, 1.12rem);
-            --fs-label: clamp(0.70rem, 0.8vw, 0.82rem);
+            --fs-label: clamp(0.64rem, 0.7vw, 0.72rem);
         }
         /* Renderizado Suizo de Alta Precision */
         html, body {
@@ -1226,6 +1226,8 @@
         .section-title {
             font-size: var(--fs-h2);
             font-weight: 700;
+            letter-spacing: -0.035em;
+            line-height: 1.02;
         }
         /* Manifiesto / Cita del Propósito */
         .purpose-quote {
@@ -2232,6 +2234,8 @@
 
             // ---------- SCROLLYTELLING: la cámara narra según la sección ----------
             const camState = { offX: 0, offY: 0, zoom: 0 };
+            const hqFocus = { v: 0 };            // 0 = giro libre · 1 = Colombia de frente
+            const HQ_ANGLE = -2.847028;   // longitud de Bucaramanga orientada a cámara
 
             const clock = new THREE.Clock();
 
@@ -2258,7 +2262,16 @@
                 smoothPosY += (targetPosY - smoothPosY) * 0.015;
 
                 globeGroup.rotation.x = smoothRotX;
-                globeGroup.rotation.y = (t * 0.04) + smoothRotY;
+                const freeRotY = (t * 0.04) + smoothRotY;
+                if (hqFocus.v > 0.001) {
+                    // Interpolación por el camino angular más corto hacia la sede
+                    let diff = (HQ_ANGLE - freeRotY + Math.PI) % (Math.PI * 2);
+                    if (diff < 0) diff += Math.PI * 2;
+                    diff -= Math.PI;
+                    globeGroup.rotation.y = freeRotY + diff * hqFocus.v;
+                } else {
+                    globeGroup.rotation.y = freeRotY;
+                }
                 globeGroup.position.x = smoothPosX + camState.offX;
                 globeGroup.position.y = smoothPosY;
 
@@ -2428,7 +2441,13 @@
                 // Objetivos e Impacto: alejamiento, visión global
                 camTween('#objectives',    { zoom: 3,  offX: -3.5, offY: 0 });
                 camTween('#roadmap',       { zoom: 6,  offX: 0,    offY: -0.6 });
-                camTween('#contact',       { zoom: 1,  offX: 0,    offY: 0.2 });
+                camTween('#contact',       { zoom: -6, offX: 0,    offY: 0.1 });
+
+                // MOMENTO CLAVE: el planeta gira hasta mostrar Colombia de frente
+                gsap.to(hqFocus, {
+                    v: 1, ease: 'power2.inOut',
+                    scrollTrigger: { trigger: '#contact', start: 'top 85%', end: 'top 35%', scrub: 1.4 }
+                });
             }
 
             // --- 6b. FLIP CARDS EN TÁCTIL (desktop usa hover puro vía CSS) ---
